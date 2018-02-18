@@ -25,7 +25,7 @@
             android:layout_above="@+id/search"
             android:layout_alignStart="@+id/search"
             android:layout_marginBottom="14dp"
-            android:onClick="search"
+            android:onClick="post"
             android:text="@string/post" />
 
         <Button
