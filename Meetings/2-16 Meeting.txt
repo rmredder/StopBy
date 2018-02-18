@@ -1,0 +1,34 @@
+﻿Date: 2/16
+Time: 3:00
+Attendance: 
+Iman Abdul-Rashed (ihabdulr@buffalo.edu) - present
+Rachel Redder (rredder@buffalo.edu) - present
+Yuanjian Liao (yuanjian@buffalo.edu) - present
+Danny Araujo (dannyara@buffalo.edu) - present
+
+
+Meeting Summary:
+Discussed specifically what activity screens we want to include in our prototype as well as what will be the function of the page. Also the basics of what we want to be displayed on each page. Also discussed the more long term goals for the project. Including potential server hosting for users querying other nearby users, chat features, logging in via facebook, and using geolocation for locating users.
+
+
+Accomplishments since last meeting:
+First Meeting
+
+
+Accomplishments planned for next meeting:
+
+
+Iman Abdul-Rashed : 
+Login page, improve current performance of login page ie. Make “username” disappear in box when user clicks on it so they do not need to backspace out the text. Same for password.
+
+
+Rachel Redder : 
+Search/Map page, page that will display upon searching for other users. Will display a map of the user's current location and dots for where other users are located.
+
+
+Yuanjian Liao : 
+Post a request page. Page that will allow a user to define the who, what and where of who they want to meet. Checkbox options.
+
+
+Danny Araujo : 
+Menu page, Page that will lead to post page, search page, profile page?, and include an icon for accessing settings.
