@@ -34,7 +34,7 @@
             android:layout_marginTop="13dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:hint="Password"
+            android:hint="@string/password"
             />
 
         <Button
