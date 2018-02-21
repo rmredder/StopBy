@@ -8,19 +8,33 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/StopByLogo" />
 
         <EditText
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/imageView2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="144dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/username"
-            />
+            android:inputType="textPersonName" />
 
         <!-- android:text="@string/username"  -->
 
@@ -33,9 +47,8 @@
             android:layout_below="@+id/username"
             android:layout_marginTop="13dp"
             android:ems="10"
-            android:inputType="textPassword"
             android:hint="@string/password"
-            />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/login"
@@ -43,8 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/password"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="20dp"
             android:onClick="login"
             android:text="@string/login" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
