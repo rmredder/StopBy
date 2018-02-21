@@ -23,16 +23,16 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/StopByLogo" />
+            app:srcCompat="@drawable/stopby_logo" />
 
         <Button
             android:id="@+id/post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
+            android:layout_above="@+id/search"
             android:layout_centerHorizontal="true"
             android:onClick="post"
             android:text="@string/post" />
@@ -41,8 +41,10 @@
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/button2"
+            android:layout_alignEnd="@+id/post"
             android:layout_alignStart="@+id/post"
-            android:layout_below="@+id/post"
+            android:layout_marginBottom="46dp"
             android:onClick="search"
             android:text="@string/search" />
 
@@ -50,8 +52,9 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/button3"
             android:layout_alignStart="@+id/search"
-            android:layout_below="@+id/search"
+            android:layout_marginBottom="61dp"
             android:text="@string/settings" />
 
         <Button
