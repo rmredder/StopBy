@@ -6,7 +6,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -29,16 +31,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Set map to open up to UB
         LatLng buff = new LatLng(42.9993289, -78.7819876);
-        mMap.animateCamera(CameraUpdateFactory.zoomBy((float).5));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(buff));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(buff, 14));
+
+
 
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.000710, -78.793274))
-                .title("User1"));
+                .title("User1").snippet("Wants to study in Capen").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.000271,-78.784563))
-                .title("User2"));
+                .title("User2").snippet("x").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.002907,-78.788082))
-                .title("User3"));
+                .title("User3").snippet("y").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
 
 
