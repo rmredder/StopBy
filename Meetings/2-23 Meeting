@@ -1,0 +1,48 @@
+Date: 2/23
+Time: 3:00
+Attendance: 
+Iman Abdul-Rashed (ihabdulr@buffalo.edu) - present
+Rachel Redder (rredder@buffalo.edu) - present
+Yuanjian Liao (yuanjian@buffalo.edu) - present
+Danny Araujo (dannyara@buffalo.edu) - present
+
+Meeting Summary:
+Login page and database
+Profile(username, general info), profile security
+Page for active posts, can deactivate current post, also timer for how long post will stay active
+Search(more like an explore), how will we query other users in the area
+Get actual location of user on map
+Register feature
+Settings page - on back burner not necessary yet, can add issues as reminders of what settings to add as we go along
+Add a drop down menu
+Sign up page (Facebook?etc)
+Better post page
+Able to click on a marker and send “on my way” notification
+
+Accomplishments since last meeting:
+
+Iman Abdul-Rashed : 
+Create prototype video for youtube
+
+Rachel Redder : 
+Set up the map page for prototype 
+
+Yuanjian Liao : 
+Set up the post page for prototype
+
+Danny Araujo : 
+Set up the login page, menu page, and created a logo for the app
+
+Accomplishments planned for next meeting:
+
+Iman Abdul-Rashed :
+Research database for login and profile information 
+
+Rachel Redder : 
+Find out how to query other users on the map
+
+Yuanjian Liao : 
+Sending post to users current location/finding their current location
+
+Danny Araujo :
+Profile/username/password security 
