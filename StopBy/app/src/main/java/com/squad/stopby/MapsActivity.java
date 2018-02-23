@@ -38,13 +38,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.000710, -78.793274))
                 .title("User1").snippet("Wants to study in Capen").icon
-                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.000271,-78.784563))
                 .title("User2").snippet("x").icon
-                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.002907,-78.788082))
                 .title("User3").snippet("y").icon
-                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
 
 
 
