@@ -33,17 +33,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng buff = new LatLng(42.9993289, -78.7819876);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(buff, 14));
 
+        //retrieve informaton sent from the Post class
+        //Must check to make sure getExtras is not null, if null then app will crash
+        if(getIntent().getExtras() != null)
+        {
+            Bundle extras = getIntent().getExtras();
+            mMap.addMarker(new MarkerOptions().position(buff)
+                    .title("You are here").snippet(extras.getString("event") + " " + extras.
+                            getString("time") + " " + extras.getString("place")).icon
+                            (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        }
+        else{
+            mMap.addMarker(new MarkerOptions().position(buff)
+                    .title("You are here").icon
+                            (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
+        }
 
-
-        mMap.addMarker(new MarkerOptions().position(new LatLng(43.000710, -78.793274))
-                .title("User1").snippet("Wants to study in Capen").icon
+        mMap.addMarker(new MarkerOptions().position(new LatLng(42.9993917, -78.7912949))
+                .title("User1").snippet("Study in Capen").icon
                         (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.000271,-78.784563))
-                .title("User2").snippet("x").icon
+                .title("User2").snippet("Hangout now Student Union").icon
                         (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(43.002907,-78.788082))
-                .title("User3").snippet("y").icon
+                .title("User3").snippet("Study in Capen").icon
                         (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
 
 
