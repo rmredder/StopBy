@@ -5,12 +5,11 @@
 
  <b>MVP:</b> 
  <ul>
- <li>An application that will facilitate people meeting by leveraging location services
+ <li>StopBy is an android application that facilitates people meeting by leveraging GPS/geolocation. User will be able to create accounts and log in, create their own profiles and view other users' profiles and find other users who share the same interest in the area near them.
  </ul>
   <b>Possible Add-ons:</b>
  <ul>
-  <li> Leveraging Facebook for profile creation
-  <li> GPS/geolocation
+  <li> use Facebook to log in
   <li> Friend System: Add people you enjoyed meeting and would like to meet again
   <li> Nearby Events: Find ongoing events near users
   <li> Nearby Restaurants: Find nearby restaurants and sort it by the price
