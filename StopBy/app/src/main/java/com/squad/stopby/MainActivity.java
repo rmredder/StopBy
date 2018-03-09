@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
         // get instance of firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
+        final DatabaseReference myRef = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
 
-        myRef.setValue("Hello, World!");
+        myRef.setValue("good!");
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,9 +36,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Called when user logs in
-    public void login(View view){
-        Intent intent = new Intent(this, Menu.class);
-        startActivity(intent);
-    }
 }

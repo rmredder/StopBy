@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "948267984621-u6rt85v80brrgttf0nbjumr8nikabh0o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.squad.stopby",
+            "certificate_hash": "446a453750029cf4e4c003a13cccf6f7e6d449c6"
+          }
+        },
+        {
           "client_id": "948267984621-bsn1ie8reearq6lf5msu52lfsc844rn3.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948267984621-bsn1ie8reearq6lf5msu52lfsc844rn3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
