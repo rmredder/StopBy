@@ -1,0 +1,39 @@
+Date: 3/9
+Time: 3:00
+Attendance: 
+Iman Abdul-Rashed (ihabdulr@buffalo.edu) - present
+Rachel Redder (rredder@buffalo.edu) - present
+Yuanjian Liao (yuanjian@buffalo.edu) - present
+Danny Araujo (dannyara@buffalo.edu) - present
+
+Meeting Summary:
+Discussed a better way to structure our database
+
+
+Accomplishments since last meeting:
+
+Iman Abdul-Rashed : 
+Research user location api
+
+Rachel Redder : 
+Learned how to structure data in database, connect app to firebase, send new data to database
+
+Yuanjian Liao : 
+Started setting up user authentication
+
+Danny Araujo : 
+Looked into user registration and how we will set it up
+
+Accomplishments planned for next meeting:
+
+Iman Abdul-Rashed :
+Set up real-time user location that will be sent to database
+
+Rachel Redder : 
+Set up nearby user query and display
+
+Yuanjian Liao : 
+Finish setting up user authentication and profile
+
+Danny Araujo :
+Set up profile query and display
