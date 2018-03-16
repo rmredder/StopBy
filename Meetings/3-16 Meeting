@@ -1,0 +1,39 @@
+Date: 3/16
+Time: 3:00
+Attendance: 
+Iman Abdul-Rashed (ihabdulr@buffalo.edu) - present
+Rachel Redder (rredder@buffalo.edu) - present
+Yuanjian Liao (yuanjian@buffalo.edu) - present
+Danny Araujo (dannyara@buffalo.edu) - excused absence
+
+Meeting Summary:
+Decided to lay out a wireframe for out app so we have a clearer idea of how everything is connected etc.
+Also discussed what is left to be accomplished before alpha submission.
+
+
+Accomplishments since last meeting:
+
+Iman Abdul-Rashed : 
+Nothing worth noting
+
+Rachel Redder : 
+Worked on finding users current location as well as setting up the permissions to allow access to users location
+
+Yuanjian Liao : 
+Continued to work on user authentication as well as sending user profile information to the database
+
+Danny Araujo : 
+
+
+Accomplishments planned for next meeting:
+
+Iman Abdul-Rashed :
+Address all issues currently assigned to me
+
+Rachel Redder : 
+Finish user location to be sent to database and user location permissions
+
+Yuanjian Liao : 
+Finish authentication and profile
+
+Danny Araujo :
