@@ -35,6 +35,7 @@ public class Post extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
+    Location userLocation;
 
     //private FusedLocationProviderClient mFusedLocationClient;
 
@@ -46,6 +47,8 @@ public class Post extends AppCompatActivity {
 
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
+
+                        //TODO edit min time and min distance for battery efficiency purposes
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                     }
                 }
@@ -78,7 +81,8 @@ public class Post extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.i("location", location.toString());
+                Log.i("Location", location.toString());
+                userLocation = location;
             }
 
             @Override
@@ -119,11 +123,16 @@ public class Post extends AppCompatActivity {
                 startActivity(goToActivePost);
 
                 String msg = message.getText().toString();
-                //TODO pass Username and location data
-                //send username and post message to the database
-                databaseReference.child("Location").child("User3").child("Post").setValue(msg);
-                databaseReference.child("Location").child("User3").child("Coordinates").setValue(12345);
 
+                //send username and post message to the database
+                databaseReference.child("Location")
+                        .child("User3")
+                        .child("Post")
+                        .setValue(msg);
+                databaseReference.child("Location")
+                        .child("User3")
+                        .child("Coordinates")
+                        .setValue(userLocation);
             }
         });
     }
