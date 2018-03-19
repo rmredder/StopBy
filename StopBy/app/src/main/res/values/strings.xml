@@ -10,7 +10,7 @@
     <string name="Profile">Profile</string>
     <string name="hangoutButton">Hangout</string>
     <string name="studyButton">Study</string>
-    <string name="timeField">Time</string>
+    <string name="message">Message</string>
     <string name="placeField">Place</string>
     <string name="postButton">Post</string>
 </resources>

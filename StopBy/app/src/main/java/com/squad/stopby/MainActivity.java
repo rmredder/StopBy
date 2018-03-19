@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,28 +18,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText username = (EditText) findViewById(R.id.username);
-        EditText password = (EditText) findViewById(R.id.password);
-        Button login = (Button) findViewById(R.id.login);
+        EditText username = findViewById(R.id.username);
+        EditText password = findViewById(R.id.password);
+        Button login = findViewById(R.id.login);
 
 
         // get instance of firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
-
-        myRef.setValue("Hello, World!");
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //final DatabaseReference myRef = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //myRef.setValue("Hello World");
+                login(view);
             }
         });
     }
 
-    //Called when user logs in
     public void login(View view){
-        Intent intent = new Intent(this, Menu.class);
-        startActivity(intent);
+        Intent goToMenu = new Intent(this, Menu.class);
+        startActivity(goToMenu);
     }
+
+
+
+    public void findUsers(DatabaseReference ref)
+    {
+       // ref.addListenerForSingleValueEvent(ValueEventListener v);
+    }
+
+
+
 }
