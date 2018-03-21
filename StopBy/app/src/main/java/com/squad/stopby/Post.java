@@ -1,6 +1,5 @@
 package com.squad.stopby;
 
-import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,12 +28,9 @@ public class Post extends AppCompatActivity {
     private EditText placeField;
     private Button postButton;
     private EditText timeField;
-
-    LocationManager locationManager;
-    LocationListener locationListener;
-    Location userLocation;
-
-    //private FusedLocationProviderClient mFusedLocationClient;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private Location userLocation;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -63,21 +55,6 @@ public class Post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         final EditText message = findViewById(R.id.timeField);
 
-        //TODO this section will get users location, need to convert this to something storable to put in database
-        /*
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-
-                        }
-                    }
-                });
-*/
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -112,8 +89,7 @@ public class Post extends AppCompatActivity {
         }
 
         //Instance of Firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
+        final Database database = new Database();
 
         Button postButton =  findViewById(R.id.postButton);
 
@@ -126,35 +102,19 @@ public class Post extends AppCompatActivity {
                 String msg = message.getText().toString();
 
                 //send username and post message to the database
+                //TODO need to pass correct username
                 LocationDB locationDB = new LocationDB("user1", msg, userLocation.getLatitude(), userLocation.getLongitude());
-                locationDB.pushToDatabase(databaseReference);
+                locationDB.pushToDatabase(database.getDatabaseReference());
 
             }
         });
     }
 
-    /*
-    public void post2Map(String event, String time, String place) {
-        Intent intent= new Intent(this, MapsActivity.class);
-        Bundle extras = new Bundle();
-        extras.putString("event", event);
-        extras.putString("time", time);
-        extras.putString("place", place);
-        intent.putExtras(extras);
-        startActivity(intent);
-    }*/
-
-    //To get the value of the clicked radio button
+    //To get the value of the clicked radio button /// Not sure if we will be needing this
     public String getValueOfClickedButton() {
         int clickedButtonId = radioGroup.getCheckedRadioButtonId();
         RadioButton clickedButton = findViewById(clickedButtonId);
         return clickedButton.getText().toString();
     }
 
-
-    public void pushLocation(Double location, String username, String post, DatabaseReference ref)
-    {
-
-        ref.child("Location").child(username).setValue(post);
-    }
 }
