@@ -1,3 +1,5 @@
+package com.squad.stopby;
+
 /**
  * Created by Yuanjian on 3/15/2018.
  */

@@ -1,21 +1,27 @@
+package com.squad.stopby;
+
 import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by rredd on 3/20/2018.
  */
 
-public class Location {
+
+public class LocationDB {
+
     private String username;
     private String post;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
+    private String uid;
 
 
-    public Location(String username, String post, long latitude, long longitude){
+    public LocationDB(String username, String post, double latitude, double longitude){
         this.username = username;
         this.post = post;
         this.latitude = latitude;
         this.longitude = longitude;
+        //ToDO add a timestamp
     }
 
     public void setUsername(String username){
@@ -42,17 +48,17 @@ public class Location {
         return post;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
     public void pushToDatabase(DatabaseReference databaseReference){
-        databaseReference.child("Location")
-                .setValue(this);
-
+        final String location = "Location";
+        this.uid = databaseReference.child(location).push().getKey();
+        databaseReference.child(location).child(this.uid).setValue(this);
     }
 }

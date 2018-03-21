@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class Post extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton hangoutButton;
@@ -125,14 +126,9 @@ public class Post extends AppCompatActivity {
                 String msg = message.getText().toString();
 
                 //send username and post message to the database
-                databaseReference.child("Location")
-                        .child("User3")
-                        .child("Post")
-                        .setValue(msg);
-                databaseReference.child("Location")
-                        .child("User3")
-                        .child("Coordinates")
-                        .setValue(userLocation);
+                LocationDB locationDB = new LocationDB("user1", msg, userLocation.getLatitude(), userLocation.getLongitude());
+                locationDB.pushToDatabase(databaseReference);
+
             }
         });
     }
