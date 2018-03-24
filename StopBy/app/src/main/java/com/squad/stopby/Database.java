@@ -22,6 +22,8 @@ public class Database {
         return this.databaseReference;
     }
 
+    public FirebaseDatabase getDatabase() { return database; }
+
     public void setUserName(String userName){
         this.userName = userName;
     }

@@ -48,7 +48,6 @@ public class Post extends AppCompatActivity {
                 return;
             }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

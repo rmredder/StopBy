@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,26 +23,10 @@ public class Menu extends AppCompatActivity {
         Button search = findViewById(R.id.search);
         Button post = findViewById(R.id.post);
 
-        // get instance of firebase
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
-
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //call find users and go to map page
-                database.getReference("Location").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String value = dataSnapshot.getValue(String.class);
-                        //txtValue.setText(value);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                search(view);
             }
         });
 
@@ -58,9 +43,8 @@ public class Menu extends AppCompatActivity {
         startActivity(goToPost);
     }
 
-    public void findUsers(DatabaseReference ref)
-    {
-        // ref.addListenerForSingleValueEvent(ValueEventListener v);
+    public void search(View view){
+        Intent goToMap = new Intent(this, MapsActivity.class);
+        startActivity(goToMap);
     }
-
 }
