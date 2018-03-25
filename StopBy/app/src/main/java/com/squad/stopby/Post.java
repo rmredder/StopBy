@@ -28,25 +28,9 @@ public class Post extends AppCompatActivity {
     private EditText placeField;
     private Button postButton;
     private EditText timeField;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    private Location userLocation;
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-                       // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        //TODO edit min time and min distance for battery efficiency purposes
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                    }
-                }
-                return;
-            }
+    String userLatitude;
+    String userLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,42 +38,11 @@ public class Post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         final EditText message = findViewById(R.id.timeField);
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.i("Location", location.toString());
-                userLocation = location;
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-            }
-        };
-
-        //Check for permission to get users location
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }
+        userLatitude = getIntent().getStringExtra("Latitude");
+        userLongitude = getIntent().getStringExtra("Longitude");
 
         //Instance of Firebase
         final Database database = new Database();
-
         Button postButton =  findViewById(R.id.postButton);
 
         postButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +55,8 @@ public class Post extends AppCompatActivity {
 
                 //send username and post message to the database
                 //TODO need to pass correct username
-                LocationDB locationDB = new LocationDB("user1", msg, userLocation.getLatitude(), userLocation.getLongitude());
+                LocationDB locationDB = new LocationDB("user1", msg,
+                        Double.parseDouble(userLatitude), Double.parseDouble(userLongitude));
                 locationDB.pushToDatabase(database.getDatabaseReference());
 
             }
