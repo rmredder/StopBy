@@ -15,6 +15,13 @@ public class LocationDB {
     private double longitude;
     private String uid;
 
+    public LocationDB(){
+        this.username = null;
+        this.post = null;
+        this.latitude = 0;
+        this.longitude = 0;
+    }
+
 
     public LocationDB(String username, String post, double latitude, double longitude){
         this.username = username;

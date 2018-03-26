@@ -28,6 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
     String userLatitude;
     String userLongitude;
+    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         userLatitude = getIntent().getStringExtra("Latitude");
         userLongitude = getIntent().getStringExtra("Longitude");
 
-        Database db = new Database();
+        db = new Database();
         db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,6 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(DataSnapshot child: children){
                     LocationDB value = child.getValue(LocationDB.class);
                     locations.add(value);
+                }
+
+                for(LocationDB loc: locations) {
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude()))
+                            .title(loc.getUsername())
+                            .icon(BitmapDescriptorFactory
+                                    .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                 }
             }
 
@@ -72,6 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(buff)
                 .title("You are here").icon
                         (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
+        db.getDatabaseReference().keepSynced(true);
 
         for(LocationDB loc: locations){
             mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude()))
