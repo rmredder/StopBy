@@ -51,6 +51,9 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ActivePost" />
+        <activity android:name=".StartupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>

@@ -13,4 +13,26 @@
     <string name="message">Message</string>
     <string name="placeField">Place</string>
     <string name="postButton">Post</string>
+
+    //main page
+    <string name="main_postBtn">Post</string>
+    <string name="main_searchBtn">Search</string>
+    <string name="main_profileBtn">Profile</string>
+    <string name="main_logout">Log out</string>
+
+    //startup page
+    <string name="app_content_description">App Logo</string>
+    <string name="loginBtn">Log in</string>
+    <string name="registrationBtn">Register</string>
+
+    //registration page
+    <string name="register_username">Type your username</string>
+    <string name="register_email">Type your Email</string>
+    <string name="register_password">Type your password</string>
+    <string name="register_userInfo">Tell us a little bit about yourself</string>
+
+    //login page
+    <string name="login_emial">Type your Email</string>
+    <string name="login_password">Type your password</string>
+
 </resources>
