@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.password);
         Button login = findViewById(R.id.login);
 
+
+        // get instance of firebase
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //final DatabaseReference myRef = database.getReferenceFromUrl("https://stopby-196918.firebaseio.com/");
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
