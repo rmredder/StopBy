@@ -14,10 +14,10 @@
     <string name="placeField">Place</string>
     <string name="postButton">Post</string>
 
-    //main page
-    <string name="main_postBtn">Post</string>
-    <string name="main_searchBtn">Search</string>
-    <string name="main_profileBtn">Profile</string>
+    //menu page
+    <string name="menu_postBtn">Post</string>
+    <string name="menu_searchBtn">Search</string>
+    <string name="menu_profileBtn">Profile</string>
     <string name="main_logout">Log out</string>
 
     //startup page

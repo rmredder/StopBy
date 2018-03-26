@@ -52,13 +52,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 String password = register_password.getText().toString();
                 String userInfo = register_userInfo.getText().toString();
                 userProfile = new Profile(username, email, password, userInfo);
-                registerUsers(username, email, password, userInfo);
+                registerUsers(email, password);
             }
         });
 
     }
 
-    private void registerUsers(String username, String email, String password, final String userInfo) {
+    private void registerUsers(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -66,7 +66,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mDatabaseReference.push().setValue(userProfile);
                             //update UI
-                            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                            Intent intent = new Intent(RegistrationActivity.this, Menu.class);
                             startActivity(intent);
                             finish();
                             Toast.makeText(RegistrationActivity.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
