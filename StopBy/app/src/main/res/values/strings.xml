@@ -32,7 +32,7 @@
     <string name="register_userInfo">Tell us a little bit about yourself</string>
 
     //login page
-    <string name="login_emial">Type your Email</string>
+    <string name="login_email">Type your Email</string>
     <string name="login_password">Type your password</string>
 
 </resources>
