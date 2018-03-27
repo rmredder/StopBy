@@ -15,8 +15,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for(DataSnapshot child: children){
+
                     LocationDB value = child.getValue(LocationDB.class);
                     locations.add(value);
                     Log.d("CREATION", value.getLatitude());
@@ -58,15 +57,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 for(LocationDB loc: locations) {
+
                     mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude())))
-                            .title(loc.getUsername() + "\n" + loc.getPost())
+                            .title(loc.getUsername())
+                            .snippet(loc.getPost())
                             .icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+
+
+
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
     }
 
@@ -87,7 +93,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for(LocationDB loc: locations){
             mMap.addMarker(new MarkerOptions().position(new LatLng( Double.parseDouble(loc.getLatitude()), (Double.parseDouble(loc.getLongitude()))))
-                    .title(loc.getUsername() + "\n" + loc.getPost())
+                    .title(loc.getUsername())
+                    .snippet(loc.getPost())
                     .icon(BitmapDescriptorFactory
                             .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         }
