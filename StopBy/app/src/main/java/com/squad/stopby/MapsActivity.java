@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-/*
+
         db = new Database();
         db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,7 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });*/
+        });
     }
 
     @Override
@@ -102,7 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.e("Location: ", location.toString());
                 //Set map to open up to users location
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.clear(); //this clears map of markers
+                //mMap.clear(); //this clears map of markers
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
 
                 //Put marker for user on the map
@@ -136,7 +136,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
-            mMap.clear(); //this clears map of markers
+            //mMap.clear(); //this clears map of markers
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
 
             //Put marker for user on the map
