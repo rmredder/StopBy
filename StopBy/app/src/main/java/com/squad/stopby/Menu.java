@@ -38,11 +38,6 @@ public class Menu extends AppCompatActivity {
 
    private Toolbar toolbar;
 
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    private String userLatitude;
-    private String userLongitude;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,35 +73,6 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.i("Location", location.toString());
-                userLatitude = Double.toString(location.getLatitude());
-                userLongitude = Double.toString(location.getLongitude());
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {}
-
-            @Override
-            public void onProviderEnabled(String s) {}
-
-            @Override
-            public void onProviderDisabled(String s) {}
-        };
-
-        //Check for permission to get users location
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }
     }
 
     //authenticate users
@@ -142,32 +108,13 @@ public class Menu extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        // If request is cancelled, the result arrays are empty.
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-
-                //TODO edit min time and min distance for battery efficiency purposes
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            }
-        }
-        return;
-    }
-
     public void toPost(){
         Intent goToPost = new Intent(this, Post.class);
-        goToPost.putExtra("Latitude", userLatitude);
-        goToPost.putExtra("Longitude", userLongitude);
         startActivity(goToPost);
     }
 
     public void toSearch(){
         Intent goToMap = new Intent(this, MapsActivity.class);
-        goToMap.putExtra("Latitude", userLatitude);
-        goToMap.putExtra("Longitude", userLongitude);
         startActivity(goToMap);
     }
 }
