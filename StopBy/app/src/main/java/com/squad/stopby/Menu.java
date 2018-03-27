@@ -71,6 +71,14 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        menu_profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Menu.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {

@@ -59,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for(LocationDB loc: locations) {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude())))
-                            .title(loc.getUsername())
+                            .title(loc.getUsername() + "\n" + loc.getPost())
                             .icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                 }
@@ -80,14 +80,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Put marker for user on the map
         mMap.addMarker(new MarkerOptions().position(buff)
-                .title("what the hell").icon
+                .title("You are here").icon
                         (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
         db.getDatabaseReference().keepSynced(true);
 
         for(LocationDB loc: locations){
             mMap.addMarker(new MarkerOptions().position(new LatLng( Double.parseDouble(loc.getLatitude()), (Double.parseDouble(loc.getLongitude()))))
-                    .title(loc.getUsername())
+                    .title(loc.getUsername() + "\n" + loc.getPost())
                     .icon(BitmapDescriptorFactory
                             .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         }

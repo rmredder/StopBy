@@ -33,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Post" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -53,7 +52,8 @@
         <activity android:name=".ActivePost" />
         <activity android:name=".StartupActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegistrationActivity"></activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

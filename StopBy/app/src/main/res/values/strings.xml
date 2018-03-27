@@ -35,4 +35,12 @@
     <string name="login_email">Type your Email</string>
     <string name="login_password">Type your password</string>
 
+    //post page
+    <string name="post_timeField">Time</string>
+
+    //profile page
+    <string name="profile_usernameTag">Username:</string>
+    <string name="profile_emailTag">Email:</string>
+    <string name="profile_userInfoTag">User Info:</string>
+
 </resources>
