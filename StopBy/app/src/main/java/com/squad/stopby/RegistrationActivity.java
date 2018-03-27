@@ -13,8 +13,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -25,8 +29,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button registrationBtn;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabaseReference;
-
+    private Database db;
+    private DatabaseReference profileDatabase;
     private Profile userProfile;
 
     @Override
@@ -41,8 +45,8 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationBtn = (Button) findViewById(R.id.register_registerBtn);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("user profile");
-
+        db = new Database();
+        profileDatabase = db.getDatabaseReference().child("user profile");
 
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +68,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            mDatabaseReference.push().setValue(userProfile);
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            profileDatabase.child(currentUser.getUid()).setValue(userProfile);
                             //update UI
                             Intent intent = new Intent(RegistrationActivity.this, Menu.class);
                             startActivity(intent);
