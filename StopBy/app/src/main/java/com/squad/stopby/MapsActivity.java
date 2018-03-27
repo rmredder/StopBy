@@ -47,22 +47,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                
+
                 for(DataSnapshot child: children){
+
                     LocationDB value = child.getValue(LocationDB.class);
                     locations.add(value);
+                    Log.d("CREATION", value.getLatitude());
+                    Log.d("CREATION", value.getLongitude());
                 }
 
                 for(LocationDB loc: locations) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude()))
+
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude())))
                             .title(loc.getUsername())
                             .icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+
+
+
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
     }
 
@@ -82,10 +91,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         db.getDatabaseReference().keepSynced(true);
 
         for(LocationDB loc: locations){
-            mMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude()))
+            mMap.addMarker(new MarkerOptions().position(new LatLng( Double.parseDouble(loc.getLatitude()), (Double.parseDouble(loc.getLongitude()))))
                     .title(loc.getUsername())
                     .icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                            .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
         }
     }
 }

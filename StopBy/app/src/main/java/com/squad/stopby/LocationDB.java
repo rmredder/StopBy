@@ -11,19 +11,19 @@ public class LocationDB {
 
     private String username;
     private String post;
-    private double latitude;
-    private double longitude;
+    private String latitude;
+    private String longitude;
     private String uid;
 
     public LocationDB(){
         this.username = null;
         this.post = null;
-        this.latitude = 0;
-        this.longitude = 0;
+        this.latitude = "";
+        this.longitude = "";
     }
 
 
-    public LocationDB(String username, String post, double latitude, double longitude){
+    public LocationDB(String username, String post, String latitude, String longitude){
         this.username = username;
         this.post = post;
         this.latitude = latitude;
@@ -39,12 +39,12 @@ public class LocationDB {
         this.post = post;
     }
 
-    public void setLatitude(long latitude) {
-        this.latitude = latitude;
+    public void setLatitude(String latitude) {
+        this.latitude = (String) latitude;
     }
 
-    public void setLongitude(long longitude) {
-        this.longitude = longitude;
+    public void setLongitude(String longitude) {
+        this.longitude = (String) longitude;
     }
 
     public String getUsername() {
@@ -55,12 +55,12 @@ public class LocationDB {
         return post;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getLatitude() {
+        return (String) latitude;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getLongitude() {
+        return (String) longitude;
     }
 
     public void pushToDatabase(DatabaseReference databaseReference){

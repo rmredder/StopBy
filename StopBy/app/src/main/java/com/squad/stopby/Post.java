@@ -56,7 +56,7 @@ public class Post extends AppCompatActivity {
                 //send username and post message to the database
                 //TODO need to pass correct username
                 LocationDB locationDB = new LocationDB("user1", msg,
-                        Double.parseDouble(userLatitude), Double.parseDouble(userLongitude));
+                        userLatitude, userLongitude);
                 locationDB.pushToDatabase(database.getDatabaseReference());
 
             }
