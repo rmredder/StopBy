@@ -46,7 +46,19 @@ public class Post extends AppCompatActivity {
         db = new Database();
         profileDatabaseReference = db.getDatabaseReference().child("user profile");
 
-        username = "";
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        profileDatabaseReference.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile value = dataSnapshot.getValue(Profile.class);
+                username = value.getUsername();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,26 +66,11 @@ public class Post extends AppCompatActivity {
 //                Intent goToActivePost = new Intent(Post.this, ActivePost.class);
 //                startActivity(goToActivePost);
 
-                final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                profileDatabaseReference.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        username = dataSnapshot.getValue(Profile.class).getUsername();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                Log.d("id value", username);
                 String message = post_messageField.getText().toString();
 
                 //send username and post message to the database
                 //TODO need to pass correct username
-                LocationDB locationDB = new LocationDB(username, message,
-                        userLatitude, userLongitude);
+                LocationDB locationDB = new LocationDB(username, message, userLatitude, userLongitude);
                 locationDB.pushToDatabase(db.getDatabaseReference());
 
                 Toast.makeText(Post.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
