@@ -1,73 +1,84 @@
 package com.squad.stopby;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Post extends AppCompatActivity {
-    private RadioGroup radioGroup;
-    private RadioButton hangoutButton;
-    private RadioButton studyButton;
-    private EditText placeField;
-    private Button postButton;
-    private EditText timeField;
 
-    String userLatitude;
-    String userLongitude;
+    private Database db;
+    private DatabaseReference profileDatabaseReference;
+
+    private EditText post_messageField;
+    private Button postBtn;
+
+    private String userLatitude;
+    private String userLongitude;
+
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        final EditText message = findViewById(R.id.timeField);
 
+        post_messageField = (EditText) findViewById(R.id.post_messageField);
+        postBtn = (Button) findViewById(R.id.postbtn);
+
+        //current user's location coordinate
         userLatitude = getIntent().getStringExtra("Latitude");
         userLongitude = getIntent().getStringExtra("Longitude");
 
         //Instance of Firebase
-        final Database database = new Database();
-        Button postButton =  findViewById(R.id.postButton);
+        db = new Database();
+        profileDatabaseReference = db.getDatabaseReference().child("user profile");
 
-        postButton.setOnClickListener(new View.OnClickListener() {
+        username = "";
+
+        postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goToActivePost = new Intent(Post.this, ActivePost.class);
-                startActivity(goToActivePost);
+//                Intent goToActivePost = new Intent(Post.this, ActivePost.class);
+//                startActivity(goToActivePost);
 
-                String msg = message.getText().toString();
+                final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                profileDatabaseReference.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        username = dataSnapshot.getValue(Profile.class).getUsername();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                Log.d("id value", username);
+                String message = post_messageField.getText().toString();
 
                 //send username and post message to the database
                 //TODO need to pass correct username
-                LocationDB locationDB = new LocationDB("user1", msg,
+                LocationDB locationDB = new LocationDB(username, message,
                         userLatitude, userLongitude);
-                locationDB.pushToDatabase(database.getDatabaseReference());
+                locationDB.pushToDatabase(db.getDatabaseReference());
 
+                Toast.makeText(Post.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    //To get the value of the clicked radio button /// Not sure if we will be needing this
-    public String getValueOfClickedButton() {
-        int clickedButtonId = radioGroup.getCheckedRadioButtonId();
-        RadioButton clickedButton = findViewById(clickedButtonId);
-        return clickedButton.getText().toString();
     }
 
 }

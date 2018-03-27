@@ -14,8 +14,7 @@ public class Profile {
     private String password;
     private String userInfo;
 
-
-
+    public Profile(){}
 
     public Profile(String username, String email, String password, String userInfo) {
         this.username = username;
