@@ -84,8 +84,6 @@ public class Menu extends AppCompatActivity {
             Intent intent = new Intent(this, StartupActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Toast.makeText(this, "Welcome back brodie", Toast.LENGTH_SHORT).show();
         }
     }
 

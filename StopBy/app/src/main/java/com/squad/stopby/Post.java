@@ -130,8 +130,6 @@ public class Post extends AppCompatActivity {
                 //clear the message textview
                 post_messageField.setText(null);
 
-
-
                 Toast.makeText(Post.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Post.this, MapsActivity.class);
                 startActivity(intent);

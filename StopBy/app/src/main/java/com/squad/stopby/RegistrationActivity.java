@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,8 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -51,12 +57,19 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = register_username.getText().toString();
-                String email = register_email.getText().toString();
-                String password = register_password.getText().toString();
-                String userInfo = register_userInfo.getText().toString();
-                userProfile = new Profile(username, email, password, userInfo);
-                registerUsers(email, password);
+                try {
+                    String username = register_username.getText().toString();
+                    String email = register_email.getText().toString();
+                    String rawPassword = register_password.getText().toString();
+                    String password = encrypt(register_password.getText().toString());
+                    String userInfo = register_userInfo.getText().toString();
+                    userProfile = new Profile(username, email, password, userInfo);
+                    registerUsers(email, rawPassword);
+
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
@@ -81,5 +94,24 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    //Encrypt the password
+    public String encrypt(String password) throws Exception {
+        SecretKeySpec key = generateKey(password);
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] bytesArray = cipher.doFinal(password.getBytes());
+        String encryptedVal = Base64.encodeToString(bytesArray, Base64.DEFAULT);
+        return encryptedVal;
+    }
+
+    private SecretKeySpec generateKey(String password) throws Exception {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] bytes = password.getBytes("UTF-8");
+        digest.update(bytes, 0, bytes.length);
+        byte[] key = digest.digest();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        return secretKeySpec;
     }
 }
