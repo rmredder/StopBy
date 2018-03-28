@@ -166,5 +166,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
         }
 
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if(marker != null){
+                    CharSequence findThisUser = marker.getTitle();
+                    Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+    }
+
+    public void marker(LocationDB locObj){
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(Double.parseDouble(locObj.getLatitude()), Double.parseDouble(locObj.getLongitude())))
+                .title(locObj.getUsername())
+                .snippet(locObj.getPost())
+                .icon(BitmapDescriptorFactory
+                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
     }
 }
