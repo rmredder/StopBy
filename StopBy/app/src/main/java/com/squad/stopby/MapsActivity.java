@@ -100,26 +100,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public void populate(Marker marker){
-        Intent intent = new Intent(this, ProfilePopupActivity.class);
-       // Toast.makeText(this,marker.getTitle(),Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,marker.getSnippet(),Toast.LENGTH_SHORT).show();
-
-
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                populate (marker);
-
-
-                return false;
-            }
-        });
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -177,7 +160,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(marker != null){
                     CharSequence findThisUser = marker.getTitle();
                     String thisUser = marker.getTitle();
-                    Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
                     queryUser(thisUser);
 
                 }
@@ -200,20 +183,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             //This is profile object that should be displayed in popup info window
                             Profile usersProfile = singleSnapShot.getValue(Profile.class);
-                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
-                            View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
+                            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
+                            final View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
                             TextView userName = mView.findViewById(R.id.textView);
                             TextView userInfo = mView.findViewById(R.id.textView4);
                             Button close = mView.findViewById(R.id.button4);
 
+                            userName.setText(usersProfile.getUsername());
+                            userInfo.setText(usersProfile.getUserInfo());
+                            
                             close.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    
+                                    //dialog.dismiss();
                                 }
                             });
 
-
+                            mBuilder.setView(mView);
+                            AlertDialog dialog = mBuilder.create();
+                            dialog.show();
                             Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
                         }
                     }
