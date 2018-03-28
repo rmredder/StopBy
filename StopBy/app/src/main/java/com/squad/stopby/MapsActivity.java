@@ -191,17 +191,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             userName.setText(usersProfile.getUsername());
                             userInfo.setText(usersProfile.getUserInfo());
-                            
+
+                            mBuilder.setView(mView);
+                            final AlertDialog dialog = mBuilder.create();
+                            dialog.show();
+
                             close.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //dialog.dismiss();
+                                    dialog.dismiss();
                                 }
                             });
 
-                            mBuilder.setView(mView);
-                            AlertDialog dialog = mBuilder.create();
-                            dialog.show();
+
                             Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
                         }
                     }
