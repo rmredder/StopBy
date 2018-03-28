@@ -44,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
     private Database db;
+    private String username;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -78,6 +79,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         db = new Database();
+        profileDatabaseReference = db.getDatabaseReference().child("user profile");
+
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile value = dataSnapshot.getValue(Profile.class);
+                username = value.getUsername();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
         db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -89,13 +105,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.d("CREATION", value.getLatitude());
                     Log.d("CREATION", value.getLongitude());
                 }
-
+                mMap.clear();
                 for(LocationDB loc: locations) {
+                    if(loc.getUsername().equals(username)){
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                                 .title(loc.getUsername())
                                 .snippet(loc.getPost())
                                 .icon(BitmapDescriptorFactory
                                         .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    }
+                    else {
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
+                                .title(loc.getUsername())
+                                .snippet(loc.getPost())
+                                .icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    }
                 }
             }
 
@@ -151,12 +176,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListener);
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
             //mMap.clear(); //this clears map of markers
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-
+            mMap.clear();
             //Put marker for user on the map
             mMap.addMarker(new MarkerOptions().position(userLocation)
                     .title("You are here").icon
@@ -199,7 +224,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Button close = mView.findViewById(R.id.button4);
 
                             userName.setText(usersProfile.getUsername());
-                            userInfo.setText("Interests: " +usersProfile.getUserInfo());
+                            userInfo.setText(usersProfile.getUserInfo());
 
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
