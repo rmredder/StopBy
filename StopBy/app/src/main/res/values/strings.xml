@@ -29,7 +29,7 @@
     <string name="register_username">Type your username</string>
     <string name="register_email">Type your Email</string>
     <string name="register_password">Type your password</string>
-    <string name="register_userInfo">Tell us a little bit about yourself</string>
+    <string name="register_userInfo">What are your interests?</string>
 
     //login page
     <string name="login_email">Type your Email</string>
@@ -41,7 +41,7 @@
     //profile page
     <string name="profile_usernameTag">Username:</string>
     <string name="profile_emailTag">Email:</string>
-    <string name="profile_userInfoTag">User Info:</string>
+    <string name="profile_userInfoTag">Interests:</string>
     <string name="close">Close</string>
 
 </resources>
