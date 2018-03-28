@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">StopBy</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="search">Search</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="post">Post</string>
+    <string name="settings">Settings</string>
+    <string name="Profile">Profile</string>
+    <string name="hangoutButton">Hangout</string>
+    <string name="studyButton">Study</string>
+    <string name="message">Message</string>
+    <string name="placeField">Place</string>
+    <string name="postButton">Post</string>
+
+    //menu page
+    <string name="menu_postBtn">Post</string>
+    <string name="menu_searchBtn">Search</string>
+    <string name="menu_profileBtn">Profile</string>
+    <string name="main_logout">Log out</string>
+
+    //startup page
+    <string name="app_content_description">App Logo</string>
+    <string name="loginBtn">Log in</string>
+    <string name="registrationBtn">Register</string>
+
+    //registration page
+    <string name="register_username">Type your username</string>
+    <string name="register_email">Type your Email</string>
+    <string name="register_password">Type your password</string>
+    <string name="register_userInfo">What are your interests?</string>
+
+    //login page
+    <string name="login_email">Type your Email</string>
+    <string name="login_password">Type your password</string>
+
+    //post page
+    <string name="post_timeField">Time</string>
+
+    //profile page
+    <string name="profile_usernameTag">Username:</string>
+    <string name="profile_emailTag">Email:</string>
+    <string name="profile_userInfoTag">Interests:</string>
+    <string name="close">Close</string>
+
+</resources>
