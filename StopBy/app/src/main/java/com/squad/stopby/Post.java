@@ -1,6 +1,7 @@
 package com.squad.stopby;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +22,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Post extends AppCompatActivity {
@@ -74,19 +78,13 @@ public class Post extends AppCompatActivity {
             }
 
             @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
 
             @Override
-            public void onProviderEnabled(String provider) {
-
-            }
+            public void onProviderEnabled(String provider) {}
 
             @Override
-            public void onProviderDisabled(String provider) {
-
-            }
+            public void onProviderDisabled(String provider) {}
         };
 
         //Check for permission to get users location
@@ -101,7 +99,6 @@ public class Post extends AppCompatActivity {
             userLongitude = Double.toString(firstLocation.getLongitude());
 
         }
-
 
         //Instance of Firebase
         db = new Database();
@@ -120,12 +117,9 @@ public class Post extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent goToActivePost = new Intent(Post.this, ActivePost.class);
-//                startActivity(goToActivePost);
 
                 String message = post_messageField.getText().toString();
 
@@ -133,9 +127,15 @@ public class Post extends AppCompatActivity {
                 LocationDB locationDB = new LocationDB(username, message, userLatitude, userLongitude);
                 locationDB.pushToDatabase(db.getDatabaseReference());
 
+                //clear the message textview
+                post_messageField.setText(null);
+
+
+
                 Toast.makeText(Post.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Post.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
     }
-
 }

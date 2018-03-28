@@ -1,5 +1,7 @@
 package com.squad.stopby;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 /**
@@ -64,8 +66,9 @@ public class LocationDB {
     }
 
     public void pushToDatabase(DatabaseReference databaseReference){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String location = "Location";
-        this.uid = databaseReference.child(location).push().getKey();
-        databaseReference.child(location).child(this.uid).setValue(this);
+//        this.uid = databaseReference.child(location).push().getKey();
+        databaseReference.child(location).child(currentUser.getUid()).setValue(this);
     }
 }

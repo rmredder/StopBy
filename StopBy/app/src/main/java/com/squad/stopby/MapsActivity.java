@@ -34,11 +34,13 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
-    Database db;
+    private ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
+    private Database db;
 
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
+    private static final double coordinate_offset = 0.00002f;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -79,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 for(LocationDB loc: locations) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude())))
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                             .title(loc.getUsername())
                             .snippet(loc.getPost())
                             .icon(BitmapDescriptorFactory
