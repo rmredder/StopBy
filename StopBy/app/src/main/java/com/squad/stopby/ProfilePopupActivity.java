@@ -1,10 +1,12 @@
 package com.squad.stopby;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,30 +15,22 @@ import android.widget.TextView;
  * Created by abdul on 3/27/18.
  */
 
-public class ProfilePopupActivity extends AppCompatActivity {
+public class ProfilePopupActivity extends Activity {
 
-    Dialog myDialog;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.profilepopup);
-        myDialog = new Dialog(this);
 
-    }
-    public void ShowPopup(View v) {
-        TextView txtclose;
-        Button btnFollow;
-        myDialog.setContentView(R.layout.profilepopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("M");
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+
+        getWindow().setLayout((int)(width*.8), (int) (height*.6));
     }
 }
+
+

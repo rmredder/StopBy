@@ -1,6 +1,7 @@
 package com.squad.stopby;
 
 import android.*;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -197,6 +200,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             //This is profile object that should be displayed in popup info window
                             Profile usersProfile = singleSnapShot.getValue(Profile.class);
+                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
+                            View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
+                            TextView userName = mView.findViewById(R.id.textView);
+                            TextView userInfo = mView.findViewById(R.id.textView4);
+                            Button close = mView.findViewById(R.id.button4);
+
+                            close.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    
+                                }
+                            });
+
+
                             Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
                         }
                     }
