@@ -156,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
             //mMap.clear(); //this clears map of markers
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-            mMap.clear();
+
             //Put marker for user on the map
             mMap.addMarker(new MarkerOptions().position(userLocation)
                     .title("You are here").icon
