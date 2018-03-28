@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -171,7 +173,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 if(marker != null){
                     CharSequence findThisUser = marker.getTitle();
+                    String thisUser = marker.getTitle();
                     Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
+                    queryUser(thisUser);
 
                 }
             }
@@ -179,13 +183,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void marker(LocationDB locObj){
+    public void queryUser(String user){
+        DatabaseReference dbRef = new Database().getDatabaseReference();
 
-        mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(Double.parseDouble(locObj.getLatitude()), Double.parseDouble(locObj.getLongitude())))
-                .title(locObj.getUsername())
-                .snippet(locObj.getPost())
-                .icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+        Query query = dbRef.child("user profile").orderByChild("username").equalTo(user);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot singleSnapShot: dataSnapshot.getChildren()){
+                        if(singleSnapShot.exists()){
+
+                            //This is profile object that should be displayed in popup info window
+                            Profile usersProfile = singleSnapShot.getValue(Profile.class);
+                            Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //return usersProfile;
+
+    }
+
+    public void displayInfoWindow(Profile profile){
+
     }
 }
