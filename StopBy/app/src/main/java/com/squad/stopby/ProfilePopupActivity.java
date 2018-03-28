@@ -21,6 +21,7 @@ public class ProfilePopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profilepopup);
         myDialog = new Dialog(this);
+
     }
     public void ShowPopup(View v) {
         TextView txtclose;
