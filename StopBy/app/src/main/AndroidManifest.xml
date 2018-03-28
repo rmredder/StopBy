@@ -26,14 +26,13 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Menu" />
         <activity android:name=".Post" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -51,6 +50,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ActivePost" />
+        <activity android:name=".StartupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
