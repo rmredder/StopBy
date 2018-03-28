@@ -80,7 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 for(LocationDB loc: locations) {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude())))
-                            .title(loc.getUsername() + "\n" + loc.getPost())
+                            .title(loc.getUsername())
+                            .snippet(loc.getPost())
                             .icon(BitmapDescriptorFactory
                                     .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                 }
@@ -103,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Set map to open up to users location
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 //mMap.clear(); //this clears map of markers
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
 
                 //Put marker for user on the map
                 mMap.addMarker(new MarkerOptions().position(userLocation)
@@ -137,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
             //mMap.clear(); //this clears map of markers
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
 
             //Put marker for user on the map
             mMap.addMarker(new MarkerOptions().position(userLocation)
