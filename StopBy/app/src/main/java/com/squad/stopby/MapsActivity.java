@@ -178,14 +178,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }else{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListener);
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
-            //mMap.clear(); //this clears map of markers
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
-            mMap.clear();
-            //Put marker for user on the map
-            mMap.addMarker(new MarkerOptions().position(userLocation)
-                    .title("You are here").icon
-                            (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            if(firstLocation != null)
+            {
+                LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
+                //mMap.clear(); //this clears map of markers
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
+                mMap.clear();
+                //Put marker for user on the map
+                mMap.addMarker(new MarkerOptions().position(userLocation)
+                        .title("You are here").icon
+                                (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            }
+            
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
