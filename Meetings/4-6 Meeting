@@ -1,0 +1,48 @@
+Date: 4/6
+Time: 3:00 - 4:30PM
+Attendance: 
+Iman Abdul-Rashed (ihabdulr@buffalo.edu) - present
+Rachel Redder (rredder@buffalo.edu) - present
+Yuanjian Liao (yuanjian@buffalo.edu) - present
+Danny Araujo (dannyara@buffalo.edu) - present
+
+Meeting Summary:
+Issues we are having with app
+What is feasible to still add with the time we have left
+Ways to stress test the database
+
+Accomplishments since last meeting:
+
+Iman Abdul-Rashed
+Refined User Profile View
+
+Rachel Redder
+Moved Location permissions into menu to prevent errors that were occuring in map/post
+Worked on getting map working without any issues
+
+Yuanjian Liao
+Figure out how to implement chat and reconstruct the firebase database
+
+Danny Araujo
+Figured out how to get signed APK(s) installed on android devices <7.0
+
+
+
+Accomplishments planned for next meeting:
+
+Iman Abdul-Rashed
+Finish Profile View and link to chat.
+
+Rachel Redder
+Continue to work on map
+
+Yuanjian Liao
+Implement chat and connect it to popup profile 
+Refine markers of each set location on the map 
+Refine post activity
+
+Danny Araujo
+Clean up database, prevent hogging
+Create “delete” function to remove posts and/or make posts delete after a certain time
+(maybe) Prevent being spawned in Africa
+
