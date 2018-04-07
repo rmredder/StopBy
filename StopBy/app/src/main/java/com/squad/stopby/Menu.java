@@ -65,7 +65,6 @@ public class Menu extends AppCompatActivity {
                 if(PERMISSION_GRANTED){
                     toSearch();
                 }else{
-                    //Toast.makeText(Menu.this, "No location permission granted", Toast.LENGTH_SHORT).show();
                     requestMapPermission();
                 }
 
@@ -83,8 +82,6 @@ public class Menu extends AppCompatActivity {
         //
         if (ContextCompat.checkSelfPermission(Menu.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //if permission is granted show the toast
-            Toast.makeText(Menu.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             PERMISSION_GRANTED = true;
         }else{
             requestMapPermission();
