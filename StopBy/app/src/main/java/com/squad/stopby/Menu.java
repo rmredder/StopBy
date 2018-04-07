@@ -81,7 +81,7 @@ public class Menu extends AppCompatActivity {
 
         //
         if (ContextCompat.checkSelfPermission(Menu.this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             PERMISSION_GRANTED = true;
         }else{
             requestMapPermission();
@@ -144,13 +144,13 @@ public class Menu extends AppCompatActivity {
 
     private void requestMapPermission(){
 
-        if(ActivityCompat.shouldShowRequestPermissionRationale(Menu.this, android.Manifest.permission.ACCESS_COARSE_LOCATION)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(Menu.this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
             new AlertDialog.Builder(this).setTitle("Permission Needed")
                     .setMessage("Location permission needed")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, MAP_PERMISSION);
+                            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAP_PERMISSION);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -161,11 +161,8 @@ public class Menu extends AppCompatActivity {
                     }).create().show();
 
         }else{
-            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             Log.e("RequestMapPermission: ", "here");
         }
-
     }
-
-
 }

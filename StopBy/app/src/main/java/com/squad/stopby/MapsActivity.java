@@ -146,7 +146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .title("You are here").icon
                                 (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 for(LocationDB loc: locations) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                             .title(loc.getUsername())
                             .snippet(loc.getPost())
                             .icon(BitmapDescriptorFactory
@@ -176,7 +177,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if(firstLocation != null)
             {
@@ -185,11 +186,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 16));
                 mMap.clear();
                 //Put marker for user on the map
+                Log.e("first location: ", "first");
                 mMap.addMarker(new MarkerOptions().position(userLocation)
                         .title("You are here").icon
                                 (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
             }
-            
+            else{ Log.e("Location = ", " null"); }
+
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
