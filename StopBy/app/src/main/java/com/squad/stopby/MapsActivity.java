@@ -51,9 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationListener locationListener;
 
     private DatabaseReference profileDatabaseReference;
-
-    private SharedPreferences mPreferences;
-    private String USERNAME;
+    private String username = "";
 
     private static final double coordinate_offset = 0.00002f;
 
@@ -77,8 +75,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        USERNAME = mPreferences.getString(getString(R.string.username), "");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -86,6 +82,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         db = new Database();
         profileDatabaseReference = db.getDatabaseReference().child("user profile");
+
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile value = dataSnapshot.getValue(Profile.class);
+                if(value.getUsername() != null){
+                    username = value.getUsername();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
         db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 mMap.clear();
                 for(LocationDB loc: locations) {
-                    if(USERNAME != "" && !(loc.getUsername().equals(USERNAME))){
+                    if(username != "" && !(loc.getUsername().equals(username))){
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                                 .title(loc.getUsername())
                                 .snippet(loc.getPost())
@@ -130,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .title("You are here").icon
                                 (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 for(LocationDB loc: locations) {
-                    if(USERNAME != "" && !(loc.getUsername().equals(USERNAME))){
+                    if(username != "" && !(loc.getUsername().equals(username))){
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                                 .title(loc.getUsername())
                                 .snippet(loc.getPost())
