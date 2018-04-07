@@ -3,7 +3,9 @@ package com.squad.stopby;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +41,7 @@ public class Menu extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
         menu_postBtn = (Button) findViewById(R.id.menu_postBtn);
         menu_searchBtn = (Button) findViewById(R.id.menu_searchBtn);
         menu_profileBtn = (Button) findViewById(R.id.menu_profileBtn);
@@ -52,7 +55,6 @@ public class Menu extends AppCompatActivity {
                 if(PERMISSION_GRANTED){
                     toPost();
                 }else{
-                    //Toast.makeText(Menu.this, "No location permission granted", Toast.LENGTH_SHORT).show();
                     requestMapPermission();
                 }
 
