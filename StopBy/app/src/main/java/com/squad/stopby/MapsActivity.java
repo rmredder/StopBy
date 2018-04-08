@@ -128,6 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -137,6 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();
                 //Put marker for user on the map
+                addMarkers();
                 mMap.addMarker(new MarkerOptions().position(userLocation)
                         .title("You are here").icon
                                 (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
@@ -255,7 +257,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void displayInfoWindow(Profile profile){
-
+    //adds hardcoded markers for Capen, Lockwood, SU, and Davis
+    public void addMarkers(){
+        //capen
+        mMap.addMarker(new MarkerOptions().position(new LatLng(43.000911, -78.789725))
+                .title("Capen").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        //davis
+        mMap.addMarker(new MarkerOptions().position(new LatLng(43.002685, -78.787148))
+                .title("Davis").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        //lockwood
+        mMap.addMarker(new MarkerOptions().position(new LatLng(43.000236, -78.786011))
+                .title("Lockwood").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        //SU
+        mMap.addMarker(new MarkerOptions().position(new LatLng(43.001089, -78.786095))
+                .title("Student Union").icon
+                        (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
 }
