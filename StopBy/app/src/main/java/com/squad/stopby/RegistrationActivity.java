@@ -1,6 +1,8 @@
 package com.squad.stopby;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,10 +41,16 @@ public class RegistrationActivity extends AppCompatActivity {
     private DatabaseReference profileDatabase;
     private Profile userProfile;
 
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
 
         register_username = (EditText) findViewById(R.id.register_username);
         register_email = (EditText) findViewById(R.id.register_email);
@@ -59,6 +67,8 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     String username = register_username.getText().toString();
+                    mEditor.putString(getString(R.string.username), username);
+                    mEditor.commit();
                     String email = register_email.getText().toString();
                     String rawPassword = register_password.getText().toString();
                     String password = encrypt(register_password.getText().toString());
