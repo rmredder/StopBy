@@ -19,6 +19,7 @@
     <string name="menu_searchBtn">Search</string>
     <string name="menu_profileBtn">Profile</string>
     <string name="main_logout">Log out</string>
+    <string name="main_userProfile">Account Setting</string>
 
     //startup page
     <string name="app_content_description">App Logo</string>
@@ -26,14 +27,16 @@
     <string name="registrationBtn">Register</string>
 
     //registration page
-    <string name="register_username">Type your username</string>
-    <string name="register_email">Type your Email</string>
-    <string name="register_password">Type your password</string>
+    <string name="register_title">Create a New Account</string>
+    <string name="register_username">Display Name</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">password</string>
     <string name="register_userInfo">What are your interests?</string>
 
     //login page
-    <string name="login_email">Type your Email</string>
-    <string name="login_password">Type your password</string>
+    <string name="login_title">Log in</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
 
     //post page
     <string name="post_timeField">Time</string>
@@ -43,5 +46,18 @@
     <string name="profile_emailTag">Email:</string>
     <string name="profile_userInfoTag">Interests:</string>
     <string name="close">Close</string>
+
+    //accSetting Page
+    <string name="accSetting_changeImg">Change Image</string>
+    <string name="accSetting_changetext">Change Info</string>
+
+    //profileChange page
+    <string name="submitBtn">Submit</string>
+
+    //profile page
+    <string name="chatBtn">Chat</string>
+
+    //chat page
+    <string name="chat_message_view_hint">Enter your text here</string>
 
 </resources>

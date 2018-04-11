@@ -9,27 +9,20 @@ package com.squad.stopby;
  */
 
 public class Profile {
-    private String username;
-    private String email;
-    private String password;
-    private String userInfo;
+  private String name;
+  private String email;
+  private String password;
+  private String image;
+  private String interest;
 
-    public Profile(){}
+  public Profile() {}
 
-    public Profile(String username, String email, String password, String userInfo) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.userInfo = userInfo;
-
+    public String getName() {
+        return name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -48,12 +41,19 @@ public class Profile {
         this.password = password;
     }
 
-
-    public String getUserInfo() {
-        return userInfo;
+    public String getImage() {
+        return image;
     }
 
-    public void setUserInfo(String userInfo) {
-        this.userInfo = userInfo;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 }

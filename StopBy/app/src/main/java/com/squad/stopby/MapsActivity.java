@@ -89,8 +89,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Profile value = dataSnapshot.getValue(Profile.class);
-                if(value.getUsername() != null){
-                    username = value.getUsername();
+                if(value.getName() != null){
+                    username = value.getName();
                 }
             }
 
@@ -154,19 +154,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
 
             @Override
-            public void onProviderEnabled(String provider) {
-
-            }
+            public void onProviderEnabled(String provider) {}
 
             @Override
-            public void onProviderDisabled(String provider) {
-
-            }
+            public void onProviderDisabled(String provider) {}
         };
 
         //Check for permission to get users location
@@ -191,16 +185,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+//        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+//            @Override
+//            public void onInfoWindowClick(Marker marker) {
+//                if(marker != null){
+//                    CharSequence findThisUser = marker.getTitle();
+//                    String thisUser = marker.getTitle();
+//                    //Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
+//                    queryUser(thisUser);
+//
+//                }
+//            }
+//        });
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                if(marker != null){
-                    CharSequence findThisUser = marker.getTitle();
-                    String thisUser = marker.getTitle();
-                    //Toast.makeText(getBaseContext(), findThisUser, Toast.LENGTH_SHORT).show();
-                    queryUser(thisUser);
+            public boolean onMarkerClick(Marker marker) {
+
+                switch(marker.getTitle()) {
+
+                    case "Capen":
+                        Intent toCapen = new Intent(MapsActivity.this, AvailablePostsCapenActivity.class);
+                        startActivity(toCapen);
+                        break;
+
+                    case "Davis":
+                        Toast.makeText(MapsActivity.this, "Davis", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case "Lockwood":
+                        Toast.makeText(MapsActivity.this, "Lockwood", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case "Student Union":
+                        Toast.makeText(MapsActivity.this, "Student Union", Toast.LENGTH_SHORT).show();
+                        break;
 
                 }
+
+                return false;
+
             }
         });
 
@@ -226,8 +249,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             TextView userInfo = mView.findViewById(R.id.textView4);
                             Button close = mView.findViewById(R.id.button4);
 
-                            userName.setText(usersProfile.getUsername());
-                            userInfo.setText(usersProfile.getUserInfo());
+//                            userName.setText(usersProfile.getName());
+//                            userInfo.setText(usersProfile.getUserInfo());
 
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
@@ -241,16 +264,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             });
 
 
-                            Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
+//                            Log.e("User Found: ", singleSnapShot.getValue(Profile.class).getUsername());
                         }
                     }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
         //return usersProfile;
