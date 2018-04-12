@@ -84,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         addMarkers();
         new FindNearbyUsers().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
+        SetMarkerListener();
     }
 
     public void queryUser(String user){
