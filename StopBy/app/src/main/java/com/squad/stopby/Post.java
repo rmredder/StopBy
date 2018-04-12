@@ -131,7 +131,10 @@ public class Post extends AppCompatActivity {
                 post_messageField.setText(null);
 
                 Toast.makeText(Post.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Post.this, MapsActivity.class);
+                // Send user to ActivePost page
+                Intent intent = new Intent(Post.this, ActivePost.class);
+                // Send the users message along with the intent
+                intent.putExtra("USER_POST", message);
                 startActivity(intent);
             }
         });
