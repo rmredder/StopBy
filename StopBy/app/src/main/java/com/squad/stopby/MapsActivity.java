@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getUsersLocation();
         mMap.setMyLocationEnabled(true);
         addMarkers();
-        new FindNearbyUsers().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
+        //new FindNearbyUsers().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
         SetMarkerListener();
         NearbyUsers();
     }
@@ -299,7 +299,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(DataSnapshot child: children){
                     LocationDB value = child.getValue(LocationDB.class);
                     locations.add(value);
-
                 }
                 mMap.clear();
                 addMarkers();
