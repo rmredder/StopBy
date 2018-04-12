@@ -83,7 +83,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getUsersLocation();
         mMap.setMyLocationEnabled(true);
         addMarkers();
-        //new FindNearbyUsers().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
         SetMarkerListener();
         NearbyUsers();
     }
@@ -228,7 +227,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void NearbyUsers(){
-        db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
+        db.getDatabase().getReference("location").child("currentlocation").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
