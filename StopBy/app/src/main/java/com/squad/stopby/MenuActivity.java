@@ -3,9 +3,7 @@ package com.squad.stopby;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,8 +19,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-public class Menu extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
     private int MAP_PERMISSION = 1;
     private boolean PERMISSION_GRANTED = false;
 
@@ -30,7 +29,6 @@ public class Menu extends AppCompatActivity {
 
     private Button menu_postBtn;
     private Button menu_searchBtn;
-    private Button menu_profileBtn;
 
     private Toolbar toolbar;
 
@@ -41,10 +39,8 @@ public class Menu extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
         menu_postBtn = (Button) findViewById(R.id.menu_postBtn);
         menu_searchBtn = (Button) findViewById(R.id.menu_searchBtn);
-        menu_profileBtn = (Button) findViewById(R.id.menu_profileBtn);
 
         toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
@@ -57,7 +53,6 @@ public class Menu extends AppCompatActivity {
                 }else{
                     requestMapPermission();
                 }
-
             }
         });
 
@@ -69,26 +64,18 @@ public class Menu extends AppCompatActivity {
                 }else{
                     requestMapPermission();
                 }
-
             }
         });
 
-        menu_profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Menu.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //
-        if (ContextCompat.checkSelfPermission(Menu.this,
+        //check if permission is granted
+        if (ContextCompat.checkSelfPermission(MenuActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             PERMISSION_GRANTED = true;
         }else{
             requestMapPermission();
-            Log.e("ContextCompat: ", "here");
         }
+
+        Log.d("mylog", "Token: " + FirebaseInstanceId.getInstance().getToken());
     }
 
     //authenticate users
@@ -113,17 +100,30 @@ public class Menu extends AppCompatActivity {
     //users sign out
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.main_signout) {
-            FirebaseAuth.getInstance().signOut();
-            //update UI
-            Intent intent = new Intent(this, StartupActivity.class);
-            startActivity(intent);
+
+        switch(item.getItemId()) {
+
+            case R.id.main_signout:
+                FirebaseAuth.getInstance().signOut();
+                //update UI
+                Intent intent = new Intent(this, StartupActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+                break;
+
+            case R.id.main_accSetting:
+                Intent toAccSetting = new Intent(this, AccSettingActivity.class);
+                startActivity(toAccSetting);
+                break;
+
         }
+
         return true;
     }
 
     public void toPost(){
-        Intent goToPost = new Intent(this, Post.class);
+        Intent goToPost = new Intent(this, PostActivity.class);
         startActivity(goToPost);
     }
 
@@ -146,13 +146,13 @@ public class Menu extends AppCompatActivity {
 
     private void requestMapPermission(){
 
-        if(ActivityCompat.shouldShowRequestPermissionRationale(Menu.this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(MenuActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
             new AlertDialog.Builder(this).setTitle("Permission Needed")
                     .setMessage("Location permission needed")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAP_PERMISSION);
+                            ActivityCompat.requestPermissions(MenuActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAP_PERMISSION);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -163,7 +163,7 @@ public class Menu extends AppCompatActivity {
                     }).create().show();
 
         }else{
-            ActivityCompat.requestPermissions(Menu.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(MenuActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             Log.e("RequestMapPermission: ", "here");
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = login_email.getText().toString();
                 String password = login_password.getText().toString();
-                signinUsers(email, password);
+
+                //check if user fills in needed information
+                if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(email)) {
+                    signinUsers(email, password);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Please fill in the required information", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -49,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, Menu.class);
+                            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
                         } else {

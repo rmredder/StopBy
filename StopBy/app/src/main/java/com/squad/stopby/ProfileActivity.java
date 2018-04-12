@@ -1,9 +1,10 @@
 package com.squad.stopby;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,58 +12,78 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private LinearLayout profile_username;
-    private LinearLayout profile_email;
-    private LinearLayout profile_userInfo;
+    private CircleImageView profile_img;
+    private TextView profile_name;
+    private TextView profile_interst;
+    private Button chatBtn;
 
-    private TextView profile_usernameField;
-    private TextView profile_emialField;
-    private TextView profile_userInfoField;
-
-    private String username;
-    private String email;
-    private String userInfo;
-
-    private Database db;
-    private DatabaseReference profileDatabase;
+    private DatabaseReference userDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profile_username = (LinearLayout) findViewById(R.id.profile_username);
-        profile_email = (LinearLayout)  findViewById(R.id.profile_email);
-        profile_userInfo = (LinearLayout) findViewById(R.id.profile_userInfo);
+        profile_img = (CircleImageView) findViewById(R.id.chat_profileImg);
+        profile_name = (TextView) findViewById(R.id.profile_name);
+        profile_interst = (TextView) findViewById(R.id.profile_interest);
+        chatBtn = (Button) findViewById(R.id.chatBtn);
 
-        profile_usernameField = (TextView) profile_username.getChildAt(1);
-        profile_emialField = (TextView) profile_email.getChildAt(1);
-        profile_userInfoField = (TextView) profile_userInfo.getChildAt(1);
-
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        db = new Database();
-        profileDatabase = db.getDatabaseReference().child("user profile");
-        profileDatabase.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+        final String other_user_id = getIntent().getStringExtra("other_user_id");
+        userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile").child(other_user_id);
+        userDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile value = dataSnapshot.getValue(Profile.class);
-                username = value.getUsername();
-                email = value.getEmail();
-                userInfo = value.getUserInfo();
-                profile_usernameField.setText(username);
-                profile_emialField.setText(email);
-                profile_userInfoField.setText(userInfo);
+                String imgUri = dataSnapshot.child("image").getValue().toString();
+                String name = dataSnapshot.child("name").getValue().toString();
+                String interest = dataSnapshot.child("interest").getValue().toString();
+
+                //load user' profile pic
+                if(imgUri.equals("default")) {
+
+                    Picasso.with(ProfileActivity.this).load(R.drawable.default1).into(profile_img);
+
+                } else {
+
+                    Picasso.with(ProfileActivity.this).load(imgUri).into(profile_img);
+
+                }
+
+                //display user's name
+                profile_name.setText(name);
+
+                //display user's interest
+                profile_interst.setText(interest);
+
+                //if user opens their own profile, they would not see the chatBtn
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(currentUser.getUid().equals(other_user_id)) {
+                    chatBtn.setVisibility(View.INVISIBLE);
+                } else {
+                    chatBtn.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toChat = new Intent(ProfileActivity.this, ChatActivity.class);
+                toChat.putExtra("other_user_id", other_user_id);
+                startActivity(toChat);
+            }
+        });
+
     }
 }
