@@ -2,7 +2,9 @@ package com.squad.stopby;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,10 +45,19 @@ public class PostActivity extends AppCompatActivity {
 
     private String username;
 
+    private String posted = "";
+    private String postMessage = "";
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        posted = mPreferences.getString("posted", "");
+        postMessage = mPreferences.getString("message", "");
 
         getUsersLocation();
         GetUserName();
@@ -114,14 +125,15 @@ public class PostActivity extends AppCompatActivity {
                     post_messageField.setText(null);
                     Toast.makeText(PostActivity.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PostActivity.this, MapsActivity.class);
-                    postBtn.setVisibility(View.INVISIBLE);
-                    deactivateBtn.setVisibility(View.VISIBLE);
+                    mEditor = mPreferences.edit();
+                    mEditor.putString("posted", "true");
+                    mEditor.putString("message", message);
+                    mEditor.commit();
                     startActivity(intent);
                 }else{
                     post_messageField.setText(null);
                     Toast.makeText(PostActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -167,5 +179,21 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        posted = mPreferences.getString("posted", "");
+        postMessage = mPreferences.getString("message", "");
+
+        if(!posted.equals("")){
+            postBtn.setVisibility(View.INVISIBLE);
+            post_messageField.setVisibility(View.INVISIBLE);
+            deactivateBtn.setVisibility(View.VISIBLE);
+            current_post.setVisibility(View.VISIBLE);
+            current_post.setText(postMessage);
+        }
     }
 }
