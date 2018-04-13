@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.squad.stopby.Post">
 
     <EditText
         android:id="@+id/post_messageField"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="104dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="@string/message"
+        android:background="@color/white"
         android:inputType="textCapSentences"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/postbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -23,12 +26,15 @@
 
     <Button
         android:id="@+id/postbtn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/postButton"
+        android:background="@drawable/startup_button_background"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -41,6 +47,8 @@
         android:layout_marginEnd="60dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="88dp"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/post_messageField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +63,63 @@
         android:layout_marginStart="163dp"
         android:layout_marginTop="52dp"
         android:text="@string/choose_location"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deactivate_post"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="23dp"
+        android:text="@string/deactivate_post"
+        android:visibility="gone"
+        android:background="@drawable/startup_button_background"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/postbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_messageField" />
+
+    <TextView
+        android:id="@+id/current_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="109dp"
+        android:text="TextView"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/post_messageField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/post_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/current_post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 </android.support.constraint.ConstraintLayout>

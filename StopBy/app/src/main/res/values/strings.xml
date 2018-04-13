@@ -40,6 +40,7 @@
 
     //post page
     <string name="post_timeField">Time</string>
+    <string name="deactivate_post">Deactivate</string>
 
     //profile page
     <string name="profile_usernameTag">Username:</string>
@@ -65,6 +66,7 @@
     <string name="davis">Davis</string>
     <string name="lockwood">Lockwood</string>
     <string name="su">Student Union</string>
+    <string name="current_location">current location</string>
 
     <string name="choose_location">Choose Location</string>
     <string-array name="choose_location_spinner">
