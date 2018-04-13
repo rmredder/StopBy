@@ -43,8 +43,8 @@
 <li>https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be</li>
 </ul>
 -->
-<strong> Beta Release Youtube Video</strong>
-<a href = ""> Video </a>
+<a href = "https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be"> <strong> Beta Release Youtube Video</strong> </a>
+ 
 
  
 
