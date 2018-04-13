@@ -7,7 +7,7 @@
     tools:context="com.squad.stopby.AvailablePostsCapenActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/su_posts_toolbar"
+        android:id="@+id/chat_posts_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -16,9 +16,9 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/su_recyclerView"
+        android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/su_posts_toolbar"> </android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/chat_posts_toolbar"> </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

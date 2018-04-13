@@ -42,7 +42,7 @@ public class LockwoodPostsViewHolder extends RecyclerView.ViewHolder{
 
     public void displayProfilePic(String imgUrl) {
 
-        posterImg = (CircleImageView) view.findViewById(R.id.chat_profileImg);
+        posterImg = (CircleImageView) view.findViewById(R.id.chatroom_profileImg);
 
         if(imgUrl.equals("default")) {
 

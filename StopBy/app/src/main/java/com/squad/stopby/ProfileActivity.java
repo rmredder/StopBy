@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profile_img = (CircleImageView) findViewById(R.id.chat_profileImg);
+        profile_img = (CircleImageView) findViewById(R.id.chatroom_profileImg);
         profile_name = (TextView) findViewById(R.id.profile_name);
         profile_interst = (TextView) findViewById(R.id.profile_interest);
         chatBtn = (Button) findViewById(R.id.chatBtn);

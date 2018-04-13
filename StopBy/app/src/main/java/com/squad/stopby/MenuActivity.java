@@ -29,6 +29,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button menu_postBtn;
     private Button menu_searchBtn;
+    private Button menu_chatBtn;
 
     private Toolbar toolbar;
 
@@ -41,6 +42,7 @@ public class MenuActivity extends AppCompatActivity {
 
         menu_postBtn = (Button) findViewById(R.id.menu_postBtn);
         menu_searchBtn = (Button) findViewById(R.id.menu_searchBtn);
+        menu_chatBtn = (Button) findViewById(R.id.menu_chatBtn);
 
         toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
@@ -76,6 +78,16 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         Log.d("mylog", "Token: " + FirebaseInstanceId.getInstance().getToken());
+
+        menu_chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent toChatRoom = new Intent(MenuActivity.this, ChatRoomActivity.class);
+                startActivity(toChatRoom);
+
+            }
+        });
     }
 
     //authenticate users

@@ -32,7 +32,7 @@ public class AvailablePostsDavisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_posts_davis);
 
-        davis_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
+        davis_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(davis_toolbar);
         getSupportActionBar().setTitle("Available Posts in Davis");
 
@@ -40,7 +40,7 @@ public class AvailablePostsDavisActivity extends AppCompatActivity {
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
         linearLayoutManager = new LinearLayoutManager(this);
-        davis_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
+        davis_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
         davis_recyclerView.setHasFixedSize(true);
         davis_recyclerView.setLayoutManager(linearLayoutManager);
 

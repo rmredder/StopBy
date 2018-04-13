@@ -20,6 +20,7 @@
     <string name="menu_profileBtn">Profile</string>
     <string name="main_logout">Log out</string>
     <string name="main_userProfile">Account Setting</string>
+    <string name="main_chatBtn">Chat</string>
 
     //startup page
     <string name="app_content_description">App Logo</string>

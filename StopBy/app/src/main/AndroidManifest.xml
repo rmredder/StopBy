@@ -79,7 +79,8 @@
 
         <activity android:name=".AvailablePostsDavisActivity" />
         <activity android:name=".AvailablePostsLockwoodActivity" />
-        <activity android:name=".AvailablePostsSuActivity"></activity>
+        <activity android:name=".AvailablePostsSuActivity" />
+        <activity android:name=".ChatRoomActivity"></activity>
     </application>
 
 </manifest>
