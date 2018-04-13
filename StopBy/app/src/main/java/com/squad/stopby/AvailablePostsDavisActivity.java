@@ -16,43 +16,43 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class AvailablePostsCapenActivity extends AppCompatActivity {
+public class AvailablePostsDavisActivity extends AppCompatActivity {
 
-    private android.support.v7.widget.Toolbar capen_toolbar;
+    private android.support.v7.widget.Toolbar davis_toolbar;
 
-    private RecyclerView capen_recyclerView;
+    private RecyclerView davis_recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
-    private DatabaseReference capenDatabase;
+    private DatabaseReference davisDatabase;
 
     private DatabaseReference userDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_available_posts_capen);
+        setContentView(R.layout.activity_available_posts_davis);
 
-       capen_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
-       setSupportActionBar(capen_toolbar);
-       getSupportActionBar().setTitle("Available Posts in Capen");
+        davis_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
+        setSupportActionBar(davis_toolbar);
+        getSupportActionBar().setTitle("Available Posts in Davis");
 
-        capenDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("Capen");
+        davisDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("Davis");
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
         linearLayoutManager = new LinearLayoutManager(this);
-        capen_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
-        capen_recyclerView.setHasFixedSize(true);
-        capen_recyclerView.setLayoutManager(linearLayoutManager);
+        davis_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
+        davis_recyclerView.setHasFixedSize(true);
+        davis_recyclerView.setLayoutManager(linearLayoutManager);
 
         //adding lines to separate each item in the recyclerView
-        DividerItemDecoration divider = new DividerItemDecoration(capen_recyclerView.getContext(), linearLayoutManager.getOrientation());
-        capen_recyclerView.addItemDecoration(divider);
+        DividerItemDecoration divider = new DividerItemDecoration(davis_recyclerView.getContext(), linearLayoutManager.getOrientation());
+        davis_recyclerView.addItemDecoration(divider);
 
         FirebaseRecyclerAdapter<Post, CapenPostsViewHolder> capen_post_adapter = new FirebaseRecyclerAdapter<Post, CapenPostsViewHolder>(
                 Post.class,
                 R.layout.available_posts_location_layout,
                 CapenPostsViewHolder.class,
-                capenDatabase
+                davisDatabase
         ) {
             @Override
             protected void populateViewHolder(final CapenPostsViewHolder viewHolder, Post single_post, int position) {
@@ -83,7 +83,7 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
                 viewHolder.getView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent toProfile = new Intent(AvailablePostsCapenActivity.this, ProfileActivity.class);
+                        Intent toProfile = new Intent(AvailablePostsDavisActivity.this, ProfileActivity.class);
                         toProfile.putExtra("other_user_id", other_user_id);
                         startActivity(toProfile);
                     }
@@ -92,7 +92,7 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
             }
         };
 
-        capen_recyclerView.setAdapter(capen_post_adapter);
+        davis_recyclerView.setAdapter(capen_post_adapter);
 
     }
 }

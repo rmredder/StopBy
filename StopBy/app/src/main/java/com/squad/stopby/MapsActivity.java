@@ -209,15 +209,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
 
                     case "Davis":
-                        Toast.makeText(MapsActivity.this, "Davis", Toast.LENGTH_SHORT).show();
+                        Intent toDavis = new Intent(MapsActivity.this, AvailablePostsDavisActivity.class);
+                        startActivity(toDavis);
                         break;
 
                     case "Lockwood":
-                        Toast.makeText(MapsActivity.this, "Lockwood", Toast.LENGTH_SHORT).show();
+                        Intent toLockwood = new Intent(MapsActivity.this, AvailablePostsLockwoodActivity.class);
+                        startActivity(toLockwood);
                         break;
 
                     case "Student Union":
-                        Toast.makeText(MapsActivity.this, "Student Union", Toast.LENGTH_SHORT).show();
+                        Intent toSu = new Intent(MapsActivity.this, AvailablePostsSuActivity.class);
+                        startActivity(toSu);
                         break;
 
                 }
