@@ -33,11 +33,15 @@ public class PostActivity extends AppCompatActivity {
     private Database db;
     private DatabaseReference profileDatabaseReference;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private FirebaseUser currentUser;
 
     private TextView current_post;
+    private TextView choose_location;
+    private TextView post_location;
     private EditText post_messageField;
     private Button postBtn;
     private Button deactivateBtn;
+    private Spinner locationSpinner;
 
     private String userLatitude;
     private String userLongitude;
@@ -47,6 +51,8 @@ public class PostActivity extends AppCompatActivity {
 
     private String posted = "";
     private String postMessage = "";
+    private String location = "";
+    private String dbKey = "";
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -59,10 +65,12 @@ public class PostActivity extends AppCompatActivity {
         posted = mPreferences.getString("posted", "");
         postMessage = mPreferences.getString("message", "");
 
+
         getUsersLocation();
         GetUserName();
 
-        Spinner locationSpinner = findViewById(R.id.spinner);
+        choose_location = findViewById(R.id.choose_location);
+        locationSpinner = findViewById(R.id.spinner);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.choose_location_spinner));
@@ -74,7 +82,7 @@ public class PostActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
                     case 0:
-                        chooseLocation = null;
+                        chooseLocation = getString(R.string.current_location);
                         break;
                     case 1:
                         chooseLocation = getString(R.string.capen);
@@ -98,6 +106,7 @@ public class PostActivity extends AppCompatActivity {
         });
 
         post_messageField = (EditText) findViewById(R.id.post_messageField);
+        post_location = (TextView) findViewById(R.id.post_location);
         current_post = (TextView) findViewById(R.id.current_post);
         postBtn = (Button) findViewById(R.id.postbtn);
         deactivateBtn = (Button) findViewById(R.id.deactivate_post);
@@ -109,7 +118,7 @@ public class PostActivity extends AppCompatActivity {
                 String message = post_messageField.getText().toString();
                 boolean posted = false;
 
-                if(chooseLocation == null && username != null){
+                if(chooseLocation.equals(getString(R.string.current_location)) && username != null){
                     //send username and post message to the database
                     LocationDB locationDB = new LocationDB(username, message, userLatitude, userLongitude);
                     locationDB.pushToDatabase(db.getDatabaseReference());
@@ -128,6 +137,7 @@ public class PostActivity extends AppCompatActivity {
                     mEditor = mPreferences.edit();
                     mEditor.putString("posted", "true");
                     mEditor.putString("message", message);
+                    mEditor.putString("location", chooseLocation);
                     mEditor.commit();
                     startActivity(intent);
                 }else{
@@ -136,14 +146,39 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+        deactivateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete users post and revert back to normal post page
+                DeactivatePost();
+            }
+        });
     }
 
+    private void DeactivatePost(){
+        DatabaseReference locationDBRef = db.getDatabase().getReference("location")
+                .child(chooseLocation).child(currentUser.getUid());
+        locationDBRef.removeValue();
+        postBtn.setVisibility(View.VISIBLE);
+        post_messageField.setVisibility(View.VISIBLE);
+        locationSpinner.setVisibility(View.VISIBLE);
+        choose_location.setVisibility(View.VISIBLE);
+        deactivateBtn.setVisibility(View.INVISIBLE);
+        current_post.setVisibility(View.GONE);
+        post_location.setVisibility(View.GONE);
+        mEditor = mPreferences.edit();
+        mEditor.putString("posted", "");
+        mEditor.putString("message", "");
+        mEditor.putString("location", "");
+        mEditor.commit();
+    }
     private void GetUserName(){
         db = new Database();
         profileDatabaseReference = db.getDatabaseReference().child("user profile");
 
         //retrieve the username and stored it in the location part of the database alongside with lat and long
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -187,13 +222,22 @@ public class PostActivity extends AppCompatActivity {
 
         posted = mPreferences.getString("posted", "");
         postMessage = mPreferences.getString("message", "");
+        location = mPreferences.getString("location", "");
 
         if(!posted.equals("")){
             postBtn.setVisibility(View.INVISIBLE);
             post_messageField.setVisibility(View.INVISIBLE);
+            locationSpinner.setVisibility(View.GONE);
+            choose_location.setVisibility(View.GONE);
             deactivateBtn.setVisibility(View.VISIBLE);
             current_post.setVisibility(View.VISIBLE);
             current_post.setText(postMessage);
+            post_location.setVisibility(View.VISIBLE);
+            if(location == null || location == ""){
+                post_location.setText("Posted at Current Location");
+            }else{
+                post_location.setText("Posted at " + location);
+            }
         }
     }
 }

@@ -66,6 +66,7 @@
     <string name="davis">Davis</string>
     <string name="lockwood">Lockwood</string>
     <string name="su">Student Union</string>
+    <string name="current_location">current location</string>
 
     <string name="choose_location">Choose Location</string>
     <string-array name="choose_location_spinner">
