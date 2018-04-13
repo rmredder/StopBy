@@ -40,6 +40,7 @@
 
     //post page
     <string name="post_timeField">Time</string>
+    <string name="deactivate_post">Deactivate</string>
 
     //profile page
     <string name="profile_usernameTag">Username:</string>
