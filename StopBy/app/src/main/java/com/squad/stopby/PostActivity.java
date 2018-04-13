@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -31,15 +32,16 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference profileDatabaseReference;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    private TextView current_post;
     private EditText post_messageField;
     private Button postBtn;
+    private Button deactivateBtn;
 
     private String userLatitude;
     private String userLongitude;
     private String chooseLocation = null;
 
     private String username;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,9 @@ public class PostActivity extends AppCompatActivity {
         });
 
         post_messageField = (EditText) findViewById(R.id.post_messageField);
+        current_post = (TextView) findViewById(R.id.current_post);
         postBtn = (Button) findViewById(R.id.postbtn);
+        deactivateBtn = (Button) findViewById(R.id.deactivate_post);
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +114,8 @@ public class PostActivity extends AppCompatActivity {
                     post_messageField.setText(null);
                     Toast.makeText(PostActivity.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PostActivity.this, MapsActivity.class);
+                    postBtn.setVisibility(View.INVISIBLE);
+                    deactivateBtn.setVisibility(View.VISIBLE);
                     startActivity(intent);
                 }else{
                     post_messageField.setText(null);
