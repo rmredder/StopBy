@@ -54,7 +54,7 @@ public class AccSettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accsetting);
 
-        img = (CircleImageView) findViewById(R.id.chat_profileImg);
+        img = (CircleImageView) findViewById(R.id.chatroom_profileImg);
         name = (TextView) findViewById(R.id.accSetting_name);
         interest = (TextView) findViewById(R.id.accSetting_interest);
         changeImgBtn = (Button) findViewById(R.id.accSetting_changeImgBtn);

@@ -6,61 +6,61 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+public class ChatRoomActivity extends AppCompatActivity {
 
-public class AvailablePostsCapenActivity extends AppCompatActivity {
-
-    private android.support.v7.widget.Toolbar capen_toolbar;
-
-    private RecyclerView capen_recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-
-    private DatabaseReference capenDatabase;
-
+    private DatabaseReference chatroomDatabase;
     private DatabaseReference userDatabase;
+
+    private Toolbar chat_toolbar;
+
+    private RecyclerView chatroom_recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_available_posts_capen);
+        setContentView(R.layout.activity_chat_room);
 
-       capen_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
-       setSupportActionBar(capen_toolbar);
-       getSupportActionBar().setTitle("Available Posts in Capen");
-
-        capenDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("Capen");
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        chatroomDatabase = FirebaseDatabase.getInstance().getReference().child("chat").child(currentUser.getUid());
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
-        linearLayoutManager = new LinearLayoutManager(this);
-        capen_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
-        capen_recyclerView.setHasFixedSize(true);
-        capen_recyclerView.setLayoutManager(linearLayoutManager);
+        chat_toolbar = (Toolbar) findViewById(R.id.chat_posts_toolbar);
+        setSupportActionBar(chat_toolbar);
+        getSupportActionBar().setTitle("Chat Room");
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        chatroom_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
+        chatroom_recyclerView.setHasFixedSize(true);
+        chatroom_recyclerView.setLayoutManager(linearLayoutManager);
 
         //adding lines to separate each item in the recyclerView
-        DividerItemDecoration divider = new DividerItemDecoration(capen_recyclerView.getContext(), linearLayoutManager.getOrientation());
-        capen_recyclerView.addItemDecoration(divider);
+        DividerItemDecoration divider = new DividerItemDecoration(chatroom_recyclerView.getContext(), linearLayoutManager.getOrientation());
+        chatroom_recyclerView.addItemDecoration(divider);
 
-        FirebaseRecyclerAdapter<Post, CapenPostsViewHolder> capen_post_adapter = new FirebaseRecyclerAdapter<Post, CapenPostsViewHolder>(
-                Post.class,
-                R.layout.available_posts_location_layout,
-                CapenPostsViewHolder.class,
-                capenDatabase
+        FirebaseRecyclerAdapter<Chatter, ChatroomViewHolder> chatroomAdapter = new FirebaseRecyclerAdapter<Chatter, ChatroomViewHolder>(
+
+                Chatter.class,
+                R.layout.chatroom_background_layout,
+                ChatroomViewHolder.class,
+                chatroomDatabase
+
         ) {
             @Override
-            protected void populateViewHolder(final CapenPostsViewHolder viewHolder, Post single_post, int position) {
+            protected void populateViewHolder(final ChatroomViewHolder viewHolder, Chatter model, int position) {
 
                 final String other_user_id = getRef(position).getKey();
-
-                //display user's profle image, name, and message in the availablePosts page
-                viewHolder.displayMessage(single_post.getMessage());
 
                 userDatabase.child(other_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -83,16 +83,18 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
                 viewHolder.getView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent toProfile = new Intent(AvailablePostsCapenActivity.this, ProfileActivity.class);
-                        toProfile.putExtra("other_user_id", other_user_id);
-                        startActivity(toProfile);
+
+                        Intent toChat = new Intent(ChatRoomActivity.this, ChatActivity.class);
+                        toChat.putExtra("other_user_id", other_user_id);
+                        startActivity(toChat);
+
                     }
                 });
-
             }
+
         };
 
-        capen_recyclerView.setAdapter(capen_post_adapter);
+        chatroom_recyclerView.setAdapter(chatroomAdapter);
 
     }
 }

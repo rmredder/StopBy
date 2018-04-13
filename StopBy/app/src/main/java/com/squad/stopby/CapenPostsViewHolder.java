@@ -42,13 +42,13 @@ public class CapenPostsViewHolder extends RecyclerView.ViewHolder{
 
     public void displayProfilePic(String imgUrl) {
 
-        posterImg = (CircleImageView) view.findViewById(R.id.chat_profileImg);
+            posterImg = (CircleImageView) view.findViewById(R.id.chatroom_profileImg);
 
-        if(imgUrl.equals("default")) {
+            if(imgUrl.equals("default")) {
 
-            Picasso.with(view.getContext()).load(R.drawable.default1).into(posterImg);
+                Picasso.with(view.getContext()).load(R.drawable.default1).into(posterImg);
 
-        } else {
+            } else {
 
             Picasso.with(view.getContext()).load(imgUrl).into(posterImg);
 

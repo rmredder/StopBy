@@ -32,7 +32,7 @@ public class AvailablePostsLockwoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_posts_lockwood);
 
-        lockwood_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
+        lockwood_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(lockwood_toolbar);
         getSupportActionBar().setTitle("Available Posts in Lockwood");
 
@@ -40,7 +40,7 @@ public class AvailablePostsLockwoodActivity extends AppCompatActivity {
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
         linearLayoutManager = new LinearLayoutManager(this);
-        lockwood_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
+        lockwood_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
         lockwood_recyclerView.setHasFixedSize(true);
         lockwood_recyclerView.setLayoutManager(linearLayoutManager);
 

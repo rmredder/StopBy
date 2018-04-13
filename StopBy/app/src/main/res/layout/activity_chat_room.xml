@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.squad.stopby.AvailablePostsDavisActivity">
+    tools:context="com.squad.stopby.ChatRoomActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/chat_posts_toolbar"
@@ -21,4 +21,4 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/chat_posts_toolbar"> </android.support.v7.widget.RecyclerView>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

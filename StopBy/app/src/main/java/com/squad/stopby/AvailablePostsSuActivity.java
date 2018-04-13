@@ -32,7 +32,7 @@ public class AvailablePostsSuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_posts_capen);
 
-        su_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
+        su_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(su_toolbar);
         getSupportActionBar().setTitle("Available Posts in Student Union");
 
@@ -40,7 +40,7 @@ public class AvailablePostsSuActivity extends AppCompatActivity {
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
         linearLayoutManager = new LinearLayoutManager(this);
-        su_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
+        su_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
         su_recyclerView.setHasFixedSize(true);
         su_recyclerView.setLayoutManager(linearLayoutManager);
 
