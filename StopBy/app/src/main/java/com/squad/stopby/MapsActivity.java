@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -21,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -90,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void queryUser(String user){
         DatabaseReference dbRef = new Database().getDatabaseReference();
 
-        Query query = dbRef.child("user profile").orderByChild("username").equalTo(user);
+        Query query = dbRef.child("user profile").orderByChild("name").equalTo(user);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -103,9 +106,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Profile usersProfile = singleSnapShot.getValue(Profile.class);
                             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
                             final View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
-                            TextView userName = mView.findViewById(R.id.textView);
-                            TextView userInfo = mView.findViewById(R.id.textView4);
-                            Button close = mView.findViewById(R.id.button4);
+                            TextView userName = mView.findViewById(R.id.user_name);
+                            TextView userInfo = mView.findViewById(R.id.user_info);
+                            ImageView userImage = mView.findViewById(R.id.user_image);
+                            TextView close = mView.findViewById(R.id.txtclose);
+                            String quote = "\"";
+                            userName.setText(usersProfile.getName());
+                            userInfo.setText(quote + " " + usersProfile.getInterest() + " " + quote);
+                            String imgUrl = usersProfile.getImage();
+                            if(imgUrl.equals("default")) {
+
+                                Picasso.with(MapsActivity.this).load(R.drawable.default1).into(userImage);
+
+                            } else {
+
+                                Picasso.with(MapsActivity.this).load(imgUrl).into(userImage);
+
+                            }
 
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
@@ -173,6 +190,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Intent toStudentUnion = new Intent(MapsActivity.this, AvailablePostsSuActivity.class);
                         startActivity(toStudentUnion);
                         break;
+                    default: queryUser(marker.getTitle());
                 }
 
                 return false;

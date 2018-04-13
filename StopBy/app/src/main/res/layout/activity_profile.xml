@@ -38,6 +38,7 @@
         android:layout_below="@+id/profile_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
+        android:textAlignment="center"
         android:padding="5dp"
         android:text="I like sleeping"
         android:textColor="@android:color/black"

@@ -157,8 +157,9 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void DeactivatePost(){
+        location = mPreferences.getString("location", "");
         DatabaseReference locationDBRef = db.getDatabase().getReference("location")
-                .child(chooseLocation).child(currentUser.getUid());
+                .child(location).child(currentUser.getUid());
         locationDBRef.removeValue();
         postBtn.setVisibility(View.VISIBLE);
         post_messageField.setVisibility(View.VISIBLE);

@@ -38,7 +38,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         chat_toolbar = (Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(chat_toolbar);
-        getSupportActionBar().setTitle("Chat Room");
+        getSupportActionBar().setTitle("Your Current Conversations");
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         chatroom_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
