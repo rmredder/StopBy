@@ -32,9 +32,9 @@
      <li>Setup your emulator, making sure it uses API 24 or newer https://developer.android.com/studio/run/managing-avds.html
       <li>Run the application https://developer.android.com/studio/run/index.html
        </ul>
-<b>AlphaRelease YouTube video:</b>
+<b>BetaRelease YouTube video:</b>
 <ul>
-<li>https://www.youtube.com/watch?v=4HeAmHGUAV4</li>
+<li>https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be</li>
 </ul>
 
  
