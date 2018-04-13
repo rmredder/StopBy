@@ -4,72 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.squad.stopby.ProfileActivity">
 
-    <LinearLayout
-        android:id="@+id/profile_username"
-        android:layout_width="match_parent"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/chatroom_profileImg"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/default1"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
+        android:layout_below="@+id/chatroom_profileImg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:padding="5dp"
+        android:text="Dummy"
+        android:textColor="@android:color/black"
+        android:textSize="23sp"
+        android:textStyle="bold" />
 
-
-        <TextView
-            android:id="@+id/profile_usernameTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="@string/profile_usernameTag" />
-
-        <TextView
-            android:id="@+id/profile_usernameField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/profile_email"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/profile_interest"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp">
+        android:layout_below="@+id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:text="I like sleeping"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
-
-        <TextView
-            android:id="@+id/profile_emailTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="@string/profile_emailTag" />
-
-        <TextView
-            android:id="@+id/profile_emailField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/profile_userInfo"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/chatBtn"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp">
-
-
-        <TextView
-            android:id="@+id/profile_userInfoTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:width="70dp"
-            android:text="@string/profile_userInfoTag" />
-
-        <TextView
-            android:id="@+id/profile_userInfoField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_below="@+id/profile_interest"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:background="@drawable/startup_button_background"
+        android:text="@string/chatBtn"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 
 </RelativeLayout>
