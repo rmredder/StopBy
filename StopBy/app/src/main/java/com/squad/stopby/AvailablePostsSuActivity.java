@@ -16,14 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class AvailablePostsCapenActivity extends AppCompatActivity {
+public class AvailablePostsSuActivity extends AppCompatActivity {
 
-    private android.support.v7.widget.Toolbar capen_toolbar;
+    private android.support.v7.widget.Toolbar su_toolbar;
 
-    private RecyclerView capen_recyclerView;
+    private RecyclerView su_recyclerView;
     private LinearLayoutManager linearLayoutManager;
 
-    private DatabaseReference capenDatabase;
+    private DatabaseReference suDatabase;
 
     private DatabaseReference userDatabase;
 
@@ -32,27 +32,27 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_posts_capen);
 
-       capen_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
-       setSupportActionBar(capen_toolbar);
-       getSupportActionBar().setTitle("Available Posts in Capen");
+        su_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.su_posts_toolbar);
+        setSupportActionBar(su_toolbar);
+        getSupportActionBar().setTitle("Available Posts in Student Union");
 
-        capenDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("Capen");
+        suDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("SU");
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
 
         linearLayoutManager = new LinearLayoutManager(this);
-        capen_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
-        capen_recyclerView.setHasFixedSize(true);
-        capen_recyclerView.setLayoutManager(linearLayoutManager);
+        su_recyclerView = (RecyclerView) findViewById(R.id.su_recyclerView);
+        su_recyclerView.setHasFixedSize(true);
+        su_recyclerView.setLayoutManager(linearLayoutManager);
 
         //adding lines to separate each item in the recyclerView
-        DividerItemDecoration divider = new DividerItemDecoration(capen_recyclerView.getContext(), linearLayoutManager.getOrientation());
-        capen_recyclerView.addItemDecoration(divider);
+        DividerItemDecoration divider = new DividerItemDecoration(su_recyclerView.getContext(), linearLayoutManager.getOrientation());
+        su_recyclerView.addItemDecoration(divider);
 
         FirebaseRecyclerAdapter<Post, CapenPostsViewHolder> capen_post_adapter = new FirebaseRecyclerAdapter<Post, CapenPostsViewHolder>(
                 Post.class,
                 R.layout.available_posts_location_layout,
                 CapenPostsViewHolder.class,
-                capenDatabase
+                suDatabase
         ) {
             @Override
             protected void populateViewHolder(final CapenPostsViewHolder viewHolder, Post single_post, int position) {
@@ -83,7 +83,7 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
                 viewHolder.getView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent toProfile = new Intent(AvailablePostsCapenActivity.this, ProfileActivity.class);
+                        Intent toProfile = new Intent(AvailablePostsSuActivity.this, ProfileActivity.class);
                         toProfile.putExtra("other_user_id", other_user_id);
                         startActivity(toProfile);
                     }
@@ -92,7 +92,7 @@ public class AvailablePostsCapenActivity extends AppCompatActivity {
             }
         };
 
-        capen_recyclerView.setAdapter(capen_post_adapter);
+        su_recyclerView.setAdapter(capen_post_adapter);
 
     }
 }

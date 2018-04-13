@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Database db;
-    private DatabaseReference profileDatabase;
+    private DatabaseReference userDatabase;
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -56,7 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = new Database();
-        profileDatabase = db.getDatabaseReference().child("user profile");
+        userDatabase = db.getDatabaseReference().child("user profile");
 
         registrationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,15 +89,19 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             try {
+                                //retrieve user tokenId
+                                String user_device_tokenId = FirebaseInstanceId.getInstance().getToken();
+
                                 HashMap<String, String> userMap = new HashMap<>();
                                 userMap.put("name", username);
                                 userMap.put("email", email);
                                 userMap.put("password", encrypt(password));
                                 userMap.put("image", "default");
                                 userMap.put("interest", "This user is too lazy to write down anything.");
+                                userMap.put("device_tokenId", user_device_tokenId);
 
                                 FirebaseUser currentUser = mAuth.getCurrentUser();
-                                profileDatabase.child(currentUser.getUid()).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                userDatabase.child(currentUser.getUid()).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //update UI

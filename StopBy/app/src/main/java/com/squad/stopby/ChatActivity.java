@@ -117,8 +117,18 @@ public class ChatActivity extends AppCompatActivity {
 
                 } else {
 
-                    sendMessage();
+                    HashMap<String, String> notificationMap = new HashMap<>();
+                    notificationMap.put("from", currentUser.getUid());
+                    notificationMap.put("type", "chat_notification");
 
+                    rootDatabase.child("notifications").child(other_user_id).push().setValue(notificationMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            sendMessage();
+
+                        }
+                    });
                 }
 
             }
