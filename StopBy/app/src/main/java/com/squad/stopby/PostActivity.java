@@ -1,24 +1,26 @@
 package com.squad.stopby;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,20 +28,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-
 public class PostActivity extends AppCompatActivity {
 
     private Database db;
     private DatabaseReference profileDatabaseReference;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private FirebaseUser currentUser;
 
+    private TextView current_post;
+    private TextView choose_location;
+    private TextView post_location;
     private EditText post_messageField;
     private Button postBtn;
-
-    LocationManager locationManager;
-    LocationListener locationListener;
+    private Button deactivateBtn;
+    private Spinner locationSpinner;
 
     private String userLatitude;
     private String userLongitude;
@@ -47,28 +49,28 @@ public class PostActivity extends AppCompatActivity {
 
     private String username;
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        // If request is cancelled, the result arrays are empty.
-        if(requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    //TODO edit min time and min distance for battery efficiency purposes
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                }
-            }
-        }
-        return;
-    }
+    private String posted = "";
+    private String postMessage = "";
+    private String location = "";
+    private String dbKey = "";
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        Spinner locationSpinner = findViewById(R.id.spinner);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        posted = mPreferences.getString("posted", "");
+        postMessage = mPreferences.getString("message", "");
+
+
+        getUsersLocation();
+        GetUserName();
+
+        choose_location = findViewById(R.id.choose_location);
+        locationSpinner = findViewById(R.id.spinner);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(PostActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.choose_location_spinner));
@@ -80,7 +82,7 @@ public class PostActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
                     case 0:
-                        chooseLocation = null;
+                        chooseLocation = getString(R.string.current_location);
                         break;
                     case 1:
                         chooseLocation = getString(R.string.capen);
@@ -104,80 +106,139 @@ public class PostActivity extends AppCompatActivity {
         });
 
         post_messageField = (EditText) findViewById(R.id.post_messageField);
+        post_location = (TextView) findViewById(R.id.post_location);
+        current_post = (TextView) findViewById(R.id.current_post);
         postBtn = (Button) findViewById(R.id.postbtn);
-
-        //current user's location coordinate
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.e("Location: ", location.toString());
-                userLatitude = Double.toString(location.getLatitude());
-                userLongitude = Double.toString(location.getLongitude());
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-            @Override
-            public void onProviderEnabled(String provider) {}
-
-            @Override
-            public void onProviderDisabled(String provider) {}
-        };
-
-        //Check for permission to get users location
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            userLatitude = Double.toString(firstLocation.getLatitude());
-            userLongitude = Double.toString(firstLocation.getLongitude());
-
-        }
-
-        //Instance of Firebase
-        db = new Database();
-        profileDatabaseReference = db.getDatabaseReference().child("user profile");
-
-        //retrieve the username and stored it in the location part of the database alongside with lat and long
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        profileDatabaseReference.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile value = dataSnapshot.getValue(Profile.class);
-                username = value.getName();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+        deactivateBtn = (Button) findViewById(R.id.deactivate_post);
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String message = post_messageField.getText().toString();
+                boolean posted = false;
 
-                if(chooseLocation == null){
+                if(chooseLocation.equals(getString(R.string.current_location)) && username != null){
                     //send username and post message to the database
                     LocationDB locationDB = new LocationDB(username, message, userLatitude, userLongitude);
                     locationDB.pushToDatabase(db.getDatabaseReference());
-
-
-                }else{
-                    //todo push to db
+                    posted = true;
+                }else if(chooseLocation != null && username != null){
+                        Post post = new Post(username, message);
+                        post.pushToDatabase(db.getDatabaseReference(), chooseLocation);
+                        posted = true;
                 }
 
                 //clear the message textview
-                post_messageField.setText(null);
-                Toast.makeText(PostActivity.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(PostActivity.this, MapsActivity.class);
-                startActivity(intent);
+                if(posted){
+                    post_messageField.setText(null);
+                    Toast.makeText(PostActivity.this, "You have successfully posted!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PostActivity.this, MapsActivity.class);
+                    mEditor = mPreferences.edit();
+                    mEditor.putString("posted", "true");
+                    mEditor.putString("message", message);
+                    mEditor.putString("location", chooseLocation);
+                    mEditor.commit();
+                    startActivity(intent);
+                }else{
+                    post_messageField.setText(null);
+                    Toast.makeText(PostActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+        deactivateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete users post and revert back to normal post page
+                DeactivatePost();
+            }
+        });
+    }
+
+    private void DeactivatePost(){
+        location = mPreferences.getString("location", "");
+        DatabaseReference locationDBRef = db.getDatabase().getReference("location")
+                .child(location).child(currentUser.getUid());
+        locationDBRef.removeValue();
+        postBtn.setVisibility(View.VISIBLE);
+        post_messageField.setVisibility(View.VISIBLE);
+        locationSpinner.setVisibility(View.VISIBLE);
+        choose_location.setVisibility(View.VISIBLE);
+        deactivateBtn.setVisibility(View.INVISIBLE);
+        current_post.setVisibility(View.GONE);
+        post_location.setVisibility(View.GONE);
+        mEditor = mPreferences.edit();
+        mEditor.putString("posted", "");
+        mEditor.putString("message", "");
+        mEditor.putString("location", "");
+        mEditor.commit();
+    }
+    private void GetUserName(){
+        db = new Database();
+        profileDatabaseReference = db.getDatabaseReference().child("user profile");
+
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile value = dataSnapshot.getValue(Profile.class);
+                if(value.getName() != null){
+                    username = value.getName();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void getUsersLocation(){
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //cannot access map without granting permission
+        @SuppressLint("MissingPermission") Task location = mFusedLocationProviderClient.getLastLocation();
+        location.addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(task.isSuccessful()){
+                    //if location returns null default to UB
+                    Location currentLocation = (Location) task.getResult();
+                    if(currentLocation != null) {
+                        userLatitude = Double.toString(currentLocation.getLatitude());
+                        userLongitude = Double.toString(currentLocation.getLongitude());
+                    }else{
+                        userLatitude = "43.000411";
+                        userLongitude = "-78.787045";
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        posted = mPreferences.getString("posted", "");
+        postMessage = mPreferences.getString("message", "");
+        location = mPreferences.getString("location", "");
+
+        if(!posted.equals("")){
+            postBtn.setVisibility(View.INVISIBLE);
+            post_messageField.setVisibility(View.INVISIBLE);
+            locationSpinner.setVisibility(View.GONE);
+            choose_location.setVisibility(View.GONE);
+            deactivateBtn.setVisibility(View.VISIBLE);
+            current_post.setVisibility(View.VISIBLE);
+            current_post.setText(postMessage);
+            post_location.setVisibility(View.VISIBLE);
+            if(location == null || location == ""){
+                post_location.setText("Posted at Current Location");
+            }else{
+                post_location.setText("Posted at " + location);
+            }
+        }
     }
 }

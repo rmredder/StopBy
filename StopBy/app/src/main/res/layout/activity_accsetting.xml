@@ -9,7 +9,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/chat_profileImg"
+        android:id="@+id/chatroom_profileImg"
         android:layout_width="170dp"
         android:layout_height="170dp"
         android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
         android:id="@+id/accSetting_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_profileImg"
+        android:layout_below="@+id/chatroom_profileImg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:padding="5dp"

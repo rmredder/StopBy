@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.squad.stopby.MenuActivity">
 
     <android.support.v7.widget.Toolbar
@@ -17,11 +18,15 @@
 
     <Button
         android:id="@+id/menu_postBtn"
-        android:layout_width="wrap_content"
+
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/startup_button_background"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
         android:text="@string/menu_postBtn"
         app:layout_constraintBottom_toTopOf="@+id/menu_searchBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,12 +34,30 @@
 
     <Button
         android:id="@+id/menu_searchBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="276dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/menu_searchBtn"
+        app:layout_constraintBottom_toTopOf="@+id/menu_chatBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/startup_button_background"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/menu_chatBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="196dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/main_chatBtn"
+        android:background="@drawable/startup_button_background"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

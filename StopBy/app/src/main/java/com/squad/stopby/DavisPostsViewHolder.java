@@ -12,7 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Yuanjian on 4/10/2018.
  */
 
-public class CapenPostsViewHolder extends RecyclerView.ViewHolder{
+public class DavisPostsViewHolder extends RecyclerView.ViewHolder{
 
     private View view;
 
@@ -20,7 +20,7 @@ public class CapenPostsViewHolder extends RecyclerView.ViewHolder{
     private TextView posterName;
     private TextView posterMessage;
 
-    public CapenPostsViewHolder(View itemView) {
+    public DavisPostsViewHolder(View itemView) {
         super(itemView);
 
         view = itemView;
@@ -42,13 +42,13 @@ public class CapenPostsViewHolder extends RecyclerView.ViewHolder{
 
     public void displayProfilePic(String imgUrl) {
 
-            posterImg = (CircleImageView) view.findViewById(R.id.chatroom_profileImg);
+        posterImg = (CircleImageView) view.findViewById(R.id.chatroom_profileImg);
 
-            if(imgUrl.equals("default")) {
+        if(imgUrl.equals("default")) {
 
-                Picasso.with(view.getContext()).load(R.drawable.default1).into(posterImg);
+            Picasso.with(view.getContext()).load(R.drawable.default1).into(posterImg);
 
-            } else {
+        } else {
 
             Picasso.with(view.getContext()).load(imgUrl).into(posterImg);
 

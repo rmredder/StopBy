@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -21,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        GetUserName();
     }
 
     @SuppressLint("MissingPermission")
@@ -83,14 +86,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getUsersLocation();
         mMap.setMyLocationEnabled(true);
         addMarkers();
-        new FindNearbyUsers().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, "");
         SetMarkerListener();
+        NearbyUsers();
     }
 
     public void queryUser(String user){
         DatabaseReference dbRef = new Database().getDatabaseReference();
 
-        Query query = dbRef.child("user profile").orderByChild("username").equalTo(user);
+        Query query = dbRef.child("user profile").orderByChild("name").equalTo(user);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -103,9 +106,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Profile usersProfile = singleSnapShot.getValue(Profile.class);
                             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
                             final View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
-                            TextView userName = mView.findViewById(R.id.textView);
-                            TextView userInfo = mView.findViewById(R.id.textView4);
-                            Button close = mView.findViewById(R.id.button4);
+                            TextView userName = mView.findViewById(R.id.user_name);
+                            TextView userInfo = mView.findViewById(R.id.user_info);
+                            ImageView userImage = mView.findViewById(R.id.user_image);
+                            TextView close = mView.findViewById(R.id.txtclose);
+                            String quote = "\"";
+                            userName.setText(usersProfile.getName());
+                            userInfo.setText(quote + " " + usersProfile.getInterest() + " " + quote);
+                            String imgUrl = usersProfile.getImage();
+                            if(imgUrl.equals("default")) {
+
+                                Picasso.with(MapsActivity.this).load(R.drawable.default1).into(userImage);
+
+                            } else {
+
+                                Picasso.with(MapsActivity.this).load(imgUrl).into(userImage);
+
+                            }
 
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
@@ -125,8 +142,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-        //return usersProfile;
 
     }
 
@@ -163,17 +178,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         break;
 
                     case "Davis":
-                        Toast.makeText(MapsActivity.this, "Davis", Toast.LENGTH_SHORT).show();
+                        Intent toDavis = new Intent(MapsActivity.this, AvailablePostsDavisActivity.class);
+                        startActivity(toDavis);
                         break;
 
                     case "Lockwood":
-                        Toast.makeText(MapsActivity.this, "Lockwood", Toast.LENGTH_SHORT).show();
+                        Intent toLockwood= new Intent(MapsActivity.this, AvailablePostsLockwoodActivity.class);
+                        startActivity(toLockwood);
                         break;
-
                     case "Student Union":
-                        Toast.makeText(MapsActivity.this, "Student Union", Toast.LENGTH_SHORT).show();
+                        Intent toStudentUnion = new Intent(MapsActivity.this, AvailablePostsSuActivity.class);
+                        startActivity(toStudentUnion);
                         break;
-
+                    default: queryUser(marker.getTitle());
                 }
 
                 return false;
@@ -182,114 +199,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    //run the post updates in a thread
-    private class FindNearbyUsers extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... strings) {
-            DatabaseReference profileDatabaseReference;
-            DatabaseReference locationDatabaseReference;
-            db = new Database();
-            profileDatabaseReference = db.getDatabaseReference().child("user profile");
+    private void GetUserName(){
+        db = new Database();
+        profileDatabaseReference = db.getDatabaseReference().child("user profile");
 
-            //retrieve the username and stored it in the location part of the database alongside with lat and long
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Profile value = dataSnapshot.getValue(Profile.class);
-                    if(value.getName() != null){
-                        username = value.getName();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {}
-            });
-
-            locationDatabaseReference = db.getDatabaseReference().child("location").child("currentlocation");
-            db.getDatabase().getReference("Location").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                    for(DataSnapshot child: children){
-                        LocationDB value = child.getValue(LocationDB.class);
-                        locations.add(value);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {}
-            });
-
-            publishProgress();
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-
-            mMap.clear();
-            addMarkers();
-            for(LocationDB loc: locations) {
-                if(username != "" && !(loc.getUsername().equals(username))){
-                    mMap.addMarker(new MarkerOptions().
-                            position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
-                            .title(loc.getUsername())
-                            .snippet(loc.getPost())
-                            .icon(BitmapDescriptorFactory
-                                    .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        profileDatabaseReference.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile value = dataSnapshot.getValue(Profile.class);
+                if(value.getName() != null){
+                    username = value.getName();
                 }
             }
-        }
-    }
 
-    private class FindUsersLocation extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... strings) {
-
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    Log.e("Location: ", location.toString());
-                    //Set map to open up to users location
-                    LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.clear();
-                    //Put marker for user on the map
-                    addMarkers();
-                    mMap.addMarker(new MarkerOptions().position(userLocation)
-                            .title("You are here").icon
-                                    (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                    for(LocationDB loc: locations) {
-                        if(username != "" && !(loc.getUsername().equals(username))){
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
-                                    .title(loc.getUsername())
-                                    .snippet(loc.getPost())
-                                    .icon(BitmapDescriptorFactory
-                                            .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                        }
-                    }
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            };
-            return null;
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     private void getUsersLocation(){
@@ -315,6 +242,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             newLatLngZoom(new LatLng(43.000870, -78.789746), 15));
                 }
             }
+        });
+    }
+
+    public void NearbyUsers(){
+        db.getDatabase().getReference("location").child("currentlocation").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+
+                for(DataSnapshot child: children){
+                    LocationDB value = child.getValue(LocationDB.class);
+                    locations.add(value);
+                }
+                mMap.clear();
+                addMarkers();
+                for(LocationDB loc: locations) {
+                    if(username != "" && !(loc.getUsername().equals(username))){
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
+                                .title(loc.getUsername())
+                                .snippet(loc.getPost())
+                                .icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 }
