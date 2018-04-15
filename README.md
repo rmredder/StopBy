@@ -3,6 +3,12 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/StopByApp/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 <h1>Project Description:</h1>
 
+# New:
+
+## Check out our Launcher page here, and download our Beta
+
+### <a href = "https://dannyara.github.io/StopByLauncher/"> StopBy Landing Page </a>
+
  <b>MVP:</b> 
  <ul>
  <li>StopBy is an android application that facilitates people meeting by leveraging GPS/geolocation. User will be able to create accounts and log in, create their own profiles and view other users' profiles and find other users who share the same interest in the area near them.
@@ -20,7 +26,7 @@
 <li> I want to find somebody to keep me company when I am alone in the library and other places.
 <li> I want to meet new people and make new friends.</ul>
 
-<b>Instructions for Running the StopBy Prototype:</b>
+<!-- <b>Instructions for Running the StopBy Prototype:</b>
 <ul>
  <li>Download Android Studio at https://developer.android.com/studio/index.html
   <li>Install Android Studio https://developer.android.com/studio/install.html
@@ -32,10 +38,13 @@
      <li>Setup your emulator, making sure it uses API 24 or newer https://developer.android.com/studio/run/managing-avds.html
       <li>Run the application https://developer.android.com/studio/run/index.html
        </ul>
-<b>AlphaRelease YouTube video:</b>
+<b>BetaRelease YouTube video:</b>
 <ul>
-<li>https://www.youtube.com/watch?v=4HeAmHGUAV4</li>
+<li>https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be</li>
 </ul>
+-->
+<a href = "https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be"> <strong> Beta Release Youtube Video</strong> </a>
+ 
 
  
 
