@@ -246,7 +246,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void NearbyUsers(){
-        db.getDatabase().getReference("location").child("currentlocation").addValueEventListener(new ValueEventListener() {
+        db.getDatabase().getReference("location").child(getString(R.string.current_location)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();

@@ -57,6 +57,6 @@ public class LocationDB {
 
     public void pushToDatabase(DatabaseReference databaseReference){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference.child("location").child("currentlocation").child(currentUser.getUid()).setValue(this);
+        databaseReference.child("location").child("Current Location").child(currentUser.getUid()).setValue(this);
     }
 }
