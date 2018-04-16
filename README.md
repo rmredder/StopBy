@@ -11,15 +11,15 @@
 
  <b>MVP:</b> 
  <ul>
- <li>StopBy is an android application that facilitates people meeting by leveraging GPS/geolocation. User will be able to create accounts and log in, create their own profiles and view other users' profiles and find other users who share the same interest in the area near them.
+ <li>StopBy is a UB based android application that facilitates people meeting by leveraging GPS/geolocation. User will be able to create an account and log in. The user will be able to create an editable profile where they will be able to add some interests as well as upload a profile image. Users will be able to make a post to either their current location or a preset location on the UB campus to indicate that they are interested in meeting new people. Users will be able to select other users from the map to view their profile and if desired initiate a chat session with that user. Users will be able to view all current chat sessions with other users.
  </ul>
   <b>Possible Add-ons:</b>
  <ul>
-  <li> use Facebook to log in
+  <li> Use Facebook to log in
   <li> Friend System: Add people you enjoyed meeting and would like to meet again
   <li> Nearby Events: Find ongoing events near users
   <li> Nearby Restaurants: Find nearby restaurants and sort it by the price
-  <li>  Friend Matching: help find people who are more likely to become users’ friends based on the	hobbies they leave in their profiles
+  <li> Friend Matching: help find people who are more likely to become users’ friends based on the	hobbies they leave in their profiles
  </ul>
 <b>User Story:</b>
 <ul>
