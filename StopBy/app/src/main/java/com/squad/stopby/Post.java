@@ -73,8 +73,15 @@ public class Post extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 Log.e("Location: ", location.toString());
-                userLatitude = Double.toString(location.getLatitude());
-                userLongitude = Double.toString(location.getLongitude());
+                if(location != null){
+                    userLatitude = Double.toString(location.getLatitude());
+                    userLongitude = Double.toString(location.getLongitude());
+                }else{
+                    userLatitude = "43.000715";
+                    userLongitude = "-78.786900";
+
+                }
+
             }
 
             @Override

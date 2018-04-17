@@ -107,20 +107,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 mMap.clear();
                 for(LocationDB loc: locations) {
-                    if(loc.getUsername().equals(username)){
+                    if(loc.getLatitude() != "" && loc.getLongitude() != "")
+                    {
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                                 .title(loc.getUsername())
                                 .snippet(loc.getPost())
                                 .icon(BitmapDescriptorFactory
                                         .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                     }
-                    else {
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
-                                .title(loc.getUsername())
-                                .snippet(loc.getPost())
-                                .icon(BitmapDescriptorFactory
-                                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                    }
+
                 }
             }
 
@@ -138,19 +133,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onLocationChanged(Location location) {
                 Log.e("Location: ", location.toString());
+                LatLng userLocation;
                 //Set map to open up to users location
-                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                if(location.equals(null)){
+                    userLocation = new LatLng(43.000715,  -78.786900);
+                }else{
+                    userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                }
                 mMap.clear();
                 //Put marker for user on the map
                 mMap.addMarker(new MarkerOptions().position(userLocation)
                         .title("You are here").icon
                                 (BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 for(LocationDB loc: locations) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
-                            .title(loc.getUsername())
-                            .snippet(loc.getPost())
-                            .icon(BitmapDescriptorFactory
-                                    .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    if(loc.getLongitude() != "" && loc.getLatitude() != ""){
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
+                                .title(loc.getUsername())
+                                .snippet(loc.getPost())
+                                .icon(BitmapDescriptorFactory
+                                        .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    }
                 }
             }
 
@@ -176,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             Location firstLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             LatLng userLocation = new LatLng(firstLocation.getLatitude(), firstLocation.getLongitude());
             //mMap.clear(); //this clears map of markers

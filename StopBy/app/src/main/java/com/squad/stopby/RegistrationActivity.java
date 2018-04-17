@@ -16,12 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -84,7 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             profileDatabase.child(currentUser.getUid()).setValue(userProfile);
                             //update UI
-                            Intent intent = new Intent(RegistrationActivity.this, Menu.class);
+                            Intent intent = new Intent(RegistrationActivity.this, MenuActivity.class);
                             startActivity(intent);
                             finish();
                             Toast.makeText(RegistrationActivity.this, "Registration is successful.", Toast.LENGTH_SHORT).show();
