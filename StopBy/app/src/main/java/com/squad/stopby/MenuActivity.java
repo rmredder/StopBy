@@ -3,7 +3,9 @@ package com.squad.stopby;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +21,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MenuActivity extends AppCompatActivity {
@@ -116,6 +122,8 @@ public class MenuActivity extends AppCompatActivity {
         switch(item.getItemId()) {
 
             case R.id.main_signout:
+                //delete current post if user logs out
+                RemovePost();
                 FirebaseAuth.getInstance().signOut();
                 //update UI
                 Intent intent = new Intent(this, StartupActivity.class);
@@ -177,5 +185,21 @@ public class MenuActivity extends AppCompatActivity {
         }else{
             ActivityCompat.requestPermissions(MenuActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+    }
+
+    private void RemovePost(){
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String location = mPreferences.getString("location", "");
+        Database db = new Database();
+        //retrieve the username and stored it in the location part of the database alongside with lat and long
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference locationDBRef = db.getDatabase().getReference("location")
+                .child(location).child(currentUser.getUid());
+        locationDBRef.removeValue();
+        SharedPreferences.Editor mEditor = mPreferences.edit();
+        mEditor.putString("posted", "");
+        mEditor.putString("message", "");
+        mEditor.putString("location", "");
+        mEditor.commit();
     }
 }
