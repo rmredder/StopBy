@@ -246,7 +246,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void NearbyUsers(){
-        db.getDatabase().getReference("location").child("currentlocation").addValueEventListener(new ValueEventListener() {
+        db.getDatabase().getReference("location").child(getString(R.string.current_location)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -258,13 +258,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.clear();
                 addMarkers();
                 for(LocationDB loc: locations) {
-                    if(username != "" && !(loc.getUsername().equals(username))){
                         mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(loc.getLatitude()) - locations.indexOf(loc) * coordinate_offset, Double.parseDouble(loc.getLongitude()) - locations.indexOf(loc) * coordinate_offset))
                                 .title(loc.getUsername())
                                 .snippet(loc.getPost())
                                 .icon(BitmapDescriptorFactory
                                         .defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                    }
                 }
             }
 
