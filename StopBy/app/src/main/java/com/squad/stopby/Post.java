@@ -43,6 +43,8 @@ public class Post extends AppCompatActivity {
 
     private String username;
 
+    private static String post_message = "";
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         // If request is cancelled, the result arrays are empty.
@@ -122,6 +124,7 @@ public class Post extends AppCompatActivity {
             public void onClick(View view) {
 
                 String message = post_messageField.getText().toString();
+                post_message = message;
 
                 //send username and post message to the database
                 LocationDB locationDB = new LocationDB(username, message, userLatitude, userLongitude);
@@ -135,5 +138,8 @@ public class Post extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public static String getPostMessage(){
+        return post_message;
     }
 }

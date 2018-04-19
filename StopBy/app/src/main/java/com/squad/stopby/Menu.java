@@ -35,6 +35,7 @@ public class Menu extends AppCompatActivity {
    private Button menu_postBtn;
    private Button menu_searchBtn;
    private Button menu_profileBtn;
+   private Button menu_activeBtn;
 
    private Toolbar toolbar;
 
@@ -48,6 +49,8 @@ public class Menu extends AppCompatActivity {
         menu_postBtn = (Button) findViewById(R.id.menu_postBtn);
         menu_searchBtn = (Button) findViewById(R.id.menu_searchBtn);
         menu_profileBtn = (Button) findViewById(R.id.menu_profileBtn);
+        menu_activeBtn = (Button) findViewById(R.id.menu_activeBtn);
+
 
         toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
@@ -70,6 +73,14 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Menu.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        menu_activeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, ActivePost.class);
                 startActivity(intent);
             }
         });
