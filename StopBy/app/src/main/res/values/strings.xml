@@ -13,7 +13,7 @@
     <string name="message">Message</string>
     <string name="placeField">Place</string>
     <string name="postButton">Post</string>
-     //popup page
+    //popup page
     <string name="profile_userInterestTag">Interests</string>
     <string name="profile_closeBtn">X</string>
     <string name="profile_messageBtn">Message</string>
