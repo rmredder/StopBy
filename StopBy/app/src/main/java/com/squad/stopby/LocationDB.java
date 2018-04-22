@@ -1,5 +1,7 @@
 package com.squad.stopby;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 /**
@@ -13,7 +15,6 @@ public class LocationDB {
     private String post;
     private String latitude;
     private String longitude;
-    private String uid;
 
     public LocationDB(){
         this.username = null;
@@ -28,7 +29,6 @@ public class LocationDB {
         this.post = post;
         this.latitude = latitude;
         this.longitude = longitude;
-        //ToDO add a timestamp
     }
 
     public void setUsername(String username){
@@ -37,14 +37,6 @@ public class LocationDB {
 
     public void setPost(String post) {
         this.post = post;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = (String) latitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = (String) longitude;
     }
 
     public String getUsername() {
@@ -64,8 +56,7 @@ public class LocationDB {
     }
 
     public void pushToDatabase(DatabaseReference databaseReference){
-        final String location = "Location";
-        this.uid = databaseReference.child(location).push().getKey();
-        databaseReference.child(location).child(this.uid).setValue(this);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference.child("location").child("Current Location").child(currentUser.getUid()).setValue(this);
     }
 }
