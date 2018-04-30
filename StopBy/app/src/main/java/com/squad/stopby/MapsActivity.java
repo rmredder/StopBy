@@ -56,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
+
     private Database db;
 
     private LocationManager locationManager;
@@ -250,6 +250,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
 
                 for(DataSnapshot child: children){
                     LocationDB value = child.getValue(LocationDB.class);
