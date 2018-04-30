@@ -3,6 +3,8 @@ package com.squad.stopby;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView profile_name;
     private TextView profile_interst;
     private Button chatBtn;
+    private Toolbar profile_toolbar;
 
     private DatabaseReference userDatabase;
 
@@ -36,6 +39,10 @@ public class ProfileActivity extends AppCompatActivity {
         profile_name = (TextView) findViewById(R.id.profile_name);
         profile_interst = (TextView) findViewById(R.id.profile_interest);
         chatBtn = (Button) findViewById(R.id.chatBtn);
+        profile_toolbar = (Toolbar) findViewById(R.id.profile_toolbar);
+        setSupportActionBar(profile_toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final String other_user_id = getIntent().getStringExtra("other_user_id");
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile").child(other_user_id);
@@ -85,5 +92,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+       if(item.getItemId() == android.R.id.home){
+           finish();
+       }
+
+        return true;
     }
 }
