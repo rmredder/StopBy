@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -35,6 +36,7 @@ public class AvailablePostsSuActivity extends AppCompatActivity {
         su_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(su_toolbar);
         getSupportActionBar().setTitle("Available Posts in Student Union");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         suDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("SU");
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
@@ -94,5 +96,14 @@ public class AvailablePostsSuActivity extends AppCompatActivity {
 
         su_recyclerView.setAdapter(capen_post_adapter);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
     }
 }

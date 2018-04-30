@@ -1,11 +1,15 @@
 package com.squad.stopby;
 
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +40,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView message_list;
     private MessageAdapter msgAdapter;
+    private LinearLayoutManager linearLayoutManager;
 
     private EditText message_view;
     private ImageButton sendBtn;
@@ -52,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
             mList.add(single_msg);
             msgAdapter.notifyDataSetChanged();
 
+            message_list.scrollToPosition(mList.size()-1);
         }
 
         @Override
@@ -80,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
 
         chat_toolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(chat_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //make the username of the person your're talking to as the title of the chat activity
         rootDatabase.child("user profile").child(other_user_id).addValueEventListener(new ValueEventListener() {
@@ -98,12 +105,14 @@ public class ChatActivity extends AppCompatActivity {
 
         message_list = (RecyclerView) findViewById(R.id.chat_message_list);
         message_list.setHasFixedSize(true);
-        message_list.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        message_list.setLayoutManager(linearLayoutManager);
         msgAdapter = new MessageAdapter(this, mList);
         message_list.setAdapter(msgAdapter);
 
 
         loadMessage();
+
 
         message_view = (EditText) findViewById(R.id.chat_message_view);
         sendBtn = (ImageButton) findViewById(R.id.chat_sendBtn);
@@ -167,5 +176,17 @@ public class ChatActivity extends AppCompatActivity {
         super.onStop();
 
         rootDatabase.child("chat").child(currentUser.getUid()).child(other_user_id).removeEventListener(msgChildEventListener);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("result", "the method is called");
+        if(item.getItemId() == android.R.id.home) {
+            Log.d("result for backward", "go through");
+//            NavUtils.navigateUpFromSameTask(this);
+            finish();
+        }
+
+        return true;
     }
 }

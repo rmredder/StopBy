@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,6 +37,7 @@ public class PostActivity extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private FirebaseUser currentUser;
 
+    private Toolbar post_toolbar;
     private TextView current_post;
     private TextView choose_location;
     private TextView post_location;
@@ -60,6 +63,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        post_toolbar = (Toolbar) findViewById(R.id.post_toolbar);
+        setSupportActionBar(post_toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         posted = mPreferences.getString("posted", "");
@@ -240,5 +248,15 @@ public class PostActivity extends AppCompatActivity {
                 post_location.setText("Posted at " + location);
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return true;
     }
 }

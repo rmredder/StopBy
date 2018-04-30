@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -35,6 +36,7 @@ public class AvailablePostsDavisActivity extends AppCompatActivity {
         davis_toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(davis_toolbar);
         getSupportActionBar().setTitle("Available Posts in Davis");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         davisDatabase = FirebaseDatabase.getInstance().getReference().child("location").child("Davis");
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
@@ -94,5 +96,14 @@ public class AvailablePostsDavisActivity extends AppCompatActivity {
 
         davis_recyclerView.setAdapter(capen_post_adapter);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
     }
 }
