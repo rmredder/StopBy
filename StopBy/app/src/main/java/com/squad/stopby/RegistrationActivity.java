@@ -24,9 +24,13 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.MessageDigest;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+
+import static android.view.View.Z;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -41,6 +45,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
+
+    private static final String passwordPattern = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!]).{6,20})";
+    private Pattern pattern;
+    private Matcher matcher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +83,23 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     //check if the user fills in all the information
                     if(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(rawPassword)) {
-                        registerUsers(username, email, rawPassword);
+
+                        pattern = Pattern.compile(passwordPattern);
+                        matcher = pattern.matcher(rawPassword);
+                        if(matcher.matches()) {
+
+                            registerUsers(username, email, rawPassword);
+
+                        } else {
+
+                            Toast.makeText(RegistrationActivity.this, "Must Contain One Digit From 1-9" + "\n" + "Must Contain One Lowercase Character" + "\n" + "Must Contain One Uppercase Character" + "\n" + "Must Contain One Special Character" + "\n" + "Must Be At Least Six Characters long", Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+
+
+
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Please fill in all the required information", Toast.LENGTH_SHORT).show();
                     }
