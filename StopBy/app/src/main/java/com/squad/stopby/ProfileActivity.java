@@ -53,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
                 String interest = dataSnapshot.child("interest").getValue().toString();
 
+
                 //load user' profile pic
                 if(imgUri.equals("default")) {
 

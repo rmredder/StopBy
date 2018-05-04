@@ -17,6 +17,8 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_round"
@@ -28,16 +30,18 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MenuActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".MenuActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PostActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PostActivity"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -53,29 +57,37 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ActivePost"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".StartupActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RegistrationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivePost"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StartupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AccSettingActivity"
             android:parentActivityName=".MenuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileChangeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileChangeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".AvailablePostsCapenActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChatActivity"
+        <activity
+            android:name=".AvailablePostsCapenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChatActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".MyFirebaseMessagingService">
@@ -90,14 +102,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".AvailablePostsDavisActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AvailablePostsLockwoodActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AvailablePostsSuActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChatRoomActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".AvailablePostsDavisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AvailablePostsLockwoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AvailablePostsSuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChatRoomActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".PasswordResetActivity"></activity>
     </application>
 
 </manifest>
