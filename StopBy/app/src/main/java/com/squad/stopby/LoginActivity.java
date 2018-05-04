@@ -1,5 +1,6 @@
 package com.squad.stopby;
 
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_email;
     private EditText login_password;
     private Button loginBtn;
+    private TextView forgot_password;
 
     private DatabaseReference userDatabase;
 
@@ -35,6 +38,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        forgot_password = findViewById(R.id.forgot_password);
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         mAuth = FirebaseAuth.getInstance();
 
         userDatabase = FirebaseDatabase.getInstance().getReference().child("user profile");
@@ -42,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         login_email = (EditText) findViewById(R.id.login_email);
         login_password = (EditText) findViewById(R.id.login_password);
         loginBtn = (Button) findViewById(R.id.loginBtn);
-
+        AccountManager am = AccountManager.get(this);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     private void signinUsers(String email, String password) {
