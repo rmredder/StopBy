@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccSettingActivity extends AppCompatActivity {
 
+    private Toolbar accSetting_toolbar;
     private CircleImageView img;
     private TextView name;
     private TextView interest;
@@ -53,6 +56,11 @@ public class AccSettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accsetting);
+
+        accSetting_toolbar = (Toolbar) findViewById(R.id.accSetting_toolbar);
+        setSupportActionBar(accSetting_toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         img = (CircleImageView) findViewById(R.id.chatroom_profileImg);
         name = (TextView) findViewById(R.id.accSetting_name);
@@ -184,5 +192,13 @@ public class AccSettingActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return true;
+    }
 }

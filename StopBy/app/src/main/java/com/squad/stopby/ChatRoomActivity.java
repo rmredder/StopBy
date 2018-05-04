@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -39,6 +40,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         chat_toolbar = (Toolbar) findViewById(R.id.chat_posts_toolbar);
         setSupportActionBar(chat_toolbar);
         getSupportActionBar().setTitle("Your Current Conversations");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         chatroom_recyclerView = (RecyclerView) findViewById(R.id.chat_recyclerView);
@@ -96,5 +98,15 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         chatroom_recyclerView.setAdapter(chatroomAdapter);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return true;
     }
 }

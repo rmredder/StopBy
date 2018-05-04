@@ -16,6 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -60,6 +62,8 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    holder.chat_username.setText(dataSnapshot.child("name").getValue().toString());
+
                     String profileImgUri = dataSnapshot.child("image").getValue().toString();
 
                     if(profileImgUri.equals("default")) {
@@ -83,6 +87,8 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
             rootDatabase.child("user profile").child(sender_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    holder.chat_username.setText(dataSnapshot.child("name").getValue().toString());
 
                     String profileImgUri = dataSnapshot.child("image").getValue().toString();
 
@@ -111,12 +117,14 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView chat_username;
         private CircleImageView chat_profileImg;
         private TextView chat_msg;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
 
+            chat_username = (TextView) itemView.findViewById(R.id.chat_username);
             chat_profileImg = (CircleImageView) itemView.findViewById(R.id.chatroom_profileImg);
             chat_msg = (TextView) itemView.findViewById(R.id.chat_msg);
         }

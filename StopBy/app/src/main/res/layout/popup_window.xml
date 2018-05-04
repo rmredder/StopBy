@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="475dp"
     android:layout_gravity="center"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -26,21 +27,16 @@
         app:srcCompat="@drawable/cerclebackground" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/user_image"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/default1"
-            app:civ_border_color="#FF000000" />
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_image"
+        android:layout_width="170dp"
+        android:layout_height="88dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/default1"
+        app:civ_border_color="#FF000000" />
 
         <TextView
             android:id="@+id/user_name"
@@ -53,25 +49,12 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif"
-            android:text="@string/profile_userInterestTag"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:typeface="monospace" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
 
@@ -79,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -87,26 +70,26 @@
                 android:id="@+id/user_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:text='I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food.I enjoy family, wisdown, knowledge, and food." '
+                android:background="@color/colorPrimary"
+                android:text="whatever"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textStyle="italic"
-                android:typeface="sans" />
+                android:typeface="sans"
+                tools:backgroundTint="FFFFFF" />
         </LinearLayout>
     </LinearLayout>
-<!--
+
     <Button
         android:id="@+id/btnMessage"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/buttonstyle"
-        android:text="@string/profile_messageBtn"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/startup_button_background"
+        android:text="@string/chatBtn"
         android:textColor="@color/white" />
-    -->
+
 
 </LinearLayout>

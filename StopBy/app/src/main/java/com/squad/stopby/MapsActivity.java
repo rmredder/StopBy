@@ -56,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
+
     private Database db;
 
     private LocationManager locationManager;
@@ -104,12 +104,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             //This is profile object that should be displayed in popup info window
                             Profile usersProfile = singleSnapShot.getValue(Profile.class);
+                            final String other_user_id = singleSnapShot.getKey();
                             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
                             final View mView = getLayoutInflater().inflate(R.layout.popup_window, null);
                             TextView userName = mView.findViewById(R.id.user_name);
                             TextView userInfo = mView.findViewById(R.id.user_info);
                             ImageView userImage = mView.findViewById(R.id.user_image);
                             TextView close = mView.findViewById(R.id.txtclose);
+                            Button chatBtn = mView.findViewById(R.id.btnMessage);
                             String quote = "\"";
                             userName.setText(usersProfile.getName());
                             userInfo.setText(quote + " " + usersProfile.getInterest() + " " + quote);
@@ -123,7 +125,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Picasso.with(MapsActivity.this).load(imgUrl).into(userImage);
 
                             }
-
+/*
+                            //if user opens their own profile, they would not see the chatBtn
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if(currentUser.getUid().equals(other_user_id)) {
+                                chatBtn.setVisibility(View.INVISIBLE);
+                            } else {
+                                chatBtn.setVisibility(View.VISIBLE);
+                            }
+*/
                             mBuilder.setView(mView);
                             final AlertDialog dialog = mBuilder.create();
                             dialog.show();
@@ -134,6 +144,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     dialog.dismiss();
                                 }
                             });
+
+                            chatBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent toChat = new Intent(MapsActivity.this, ChatActivity.class);
+                                    toChat.putExtra("other_user_id", other_user_id);
+                                    startActivity(toChat);
+                                }
+                            });
+
+
                         }
                     }
                 }
@@ -142,6 +163,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+
 
     }
 
@@ -250,6 +273,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                ArrayList<LocationDB> locations = new ArrayList<LocationDB>();
 
                 for(DataSnapshot child: children){
                     LocationDB value = child.getValue(LocationDB.class);
