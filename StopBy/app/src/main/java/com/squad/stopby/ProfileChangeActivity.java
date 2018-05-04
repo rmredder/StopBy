@@ -1,5 +1,6 @@
 package com.squad.stopby;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -70,12 +71,15 @@ public class ProfileChangeActivity extends AppCompatActivity {
 
                     profileDatabase.child("name").setValue(new_username);
                     profileDatabase.child("interest").setValue(new_interest);
+
                     username_change_field.getText().clear();
                     interest_change_field.getText().clear();
                     Toast.makeText(ProfileChangeActivity.this, "update successful", Toast.LENGTH_SHORT).show();
 
+                    finish();
+
                 } else {
-                    Toast.makeText(ProfileChangeActivity.this, ":(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileChangeActivity.this, "Please fill out all the required info :(", Toast.LENGTH_SHORT).show();
                 }
             }
         });
