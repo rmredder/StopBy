@@ -13,7 +13,7 @@
     <string name="message">Message</string>
     <string name="placeField">Place</string>
     <string name="postButton">Post</string>
-     //popup page
+    //popup page
     <string name="profile_userInterestTag">Interests</string>
     <string name="profile_closeBtn">X</string>
     <string name="profile_messageBtn">Message</string>
@@ -41,6 +41,7 @@
     <string name="login_title">Log in</string>
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 
     //post page
     <string name="post_timeField">Time</string>
