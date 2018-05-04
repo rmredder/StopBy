@@ -54,7 +54,7 @@
         android:layout_marginBottom="196dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/main_chatBtn"
+        android:text="Conversations"
         android:background="@drawable/startup_button_background"
         android:textColor="@android:color/white"
         android:textSize="16sp"

@@ -49,7 +49,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
     private void sendNotification(String notificationTitle, String notificationBody) {
 
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, ChatRoomActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
