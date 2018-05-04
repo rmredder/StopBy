@@ -92,7 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(RegistrationActivity.this, "Must Contain One Digit From 1-9" + "\n" + "Must Contain One Lowercase Character" + "\n" + "Must Contain One Uppercase Character" + "\n" + "Must Contain One Special Character" + "\n" + "Must Be At Least Six Characters long", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "Must Contain One Digit From 0-9" + "\n" + "Must Contain One Lowercase Character" + "\n" + "Must Contain One Uppercase Character" + "\n" + "Must Contain One Special Character" + "\n" + "Must Be At Least Six Characters long", Toast.LENGTH_SHORT).show();
 
                         }
 
