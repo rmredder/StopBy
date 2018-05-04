@@ -50,4 +50,5 @@ public class ChatroomViewHolder extends RecyclerView.ViewHolder{
     public View getView() {
         return view;
     }
+
 }
