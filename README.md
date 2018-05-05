@@ -5,9 +5,11 @@
 
 # New:
 
-## Check out our Launcher page here, and download our Beta
+## Check out our Launcher page here, and download our Official Release
 
 ### <a href = "https://dannyara.github.io/StopByLauncher/"> StopBy Landing Page </a>
+
+### <a href = "https://www.youtube.com/watch?v=PnzhD1GL4zI&feature=youtu.be/"> StopBy Official Release Video </a>
 
  <b>MVP:</b> 
  <ul>
@@ -43,7 +45,7 @@
 <li>https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be</li>
 </ul>
 -->
-<a href = "https://www.youtube.com/watch?v=U3htvwvwYA4&feature=youtu.be"> <strong> Beta Release Youtube Video</strong> </a>
+
  
 
  
